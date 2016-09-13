@@ -1,18 +1,21 @@
 package cafe.adriel.voxrecorder.ui
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.NavUtils
 import android.view.Menu
 import android.view.MenuItem
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.ui.base.BaseActivity
+import cafe.adriel.voxrecorder.util.recreateWithNightMode
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.pawegio.kandroid.IntentFor
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+
+    val REQUEST_THEME_CHANGED = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +38,17 @@ class MainActivity : BaseActivity() {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_THEME_CHANGED){
+            recreateWithNightMode()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
-            android.R.id.home -> {
-                NavUtils.navigateUpFromSameTask(this)
-                return true
-            }
             R.id.settings -> {
-                startActivity(IntentFor<SettingsActivity>(this))
+                startActivityForResult(IntentFor<SettingsActivity>(this), REQUEST_THEME_CHANGED)
                 return true
             }
         }

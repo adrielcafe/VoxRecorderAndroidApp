@@ -1,11 +1,13 @@
 buildscript {
+    ext.support_version = '24.2.0'
+    ext.kotlin_version = '1.0.3'
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.0-rc2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.ofg:uptodate-gradle-plugin:1.6.2'
     }
 }

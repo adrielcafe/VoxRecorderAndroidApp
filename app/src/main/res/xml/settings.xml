@@ -1,62 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:key="recording"
         android:title="@string/recording">
 
-        <ListPreference
+        <android.support.v7.preference.ListPreference
             android:key="recording_format"
-            android:title="@string/file_format"/>
+            android:title="@string/file_format"
+            android:summary="%s"
+            android:entries="@array/pref_recording_format_titles"
+            android:entryValues="@array/pref_recording_format_values"
+            android:defaultValue="wav"/>
 
-        <ListPreference
+        <android.support.v7.preference.ListPreference
             android:key="recording_sample_rate"
-            android:title="@string/sample_rate"/>
+            android:title="@string/sample_rate"
+            android:summary="%s"
+            android:entries="@array/pref_recording_sample_rate_titles"
+            android:entryValues="@array/pref_recording_sample_rate_values"
+            android:defaultValue="48000"/>
 
-        <ListPreference
-            android:key="recording_source"
-            android:title="@string/source"/>
-
-        <ListPreference
+        <android.support.v7.preference.ListPreference
             android:key="recording_channel"
-            android:title="@string/channel"/>
+            android:title="@string/channel"
+            android:summary="%s"
+            android:entries="@array/pref_recording_channel_titles"
+            android:entryValues="@array/pref_recording_channel_values"
+            android:defaultValue="stereo"/>
 
-    </PreferenceCategory>
+        <android.support.v7.preference.ListPreference
+            android:key="recording_source"
+            android:title="@string/source"
+            android:summary="%s"
+            android:entries="@array/pref_recording_source_titles"
+            android:entryValues="@array/pref_recording_source_values"
+            android:defaultValue="mic"/>
 
-    <PreferenceCategory
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
         android:key="theme"
         android:title="@string/theme">
 
-        <Preference
-            android:key="theme_color"
-            android:title="@string/color"/>
-
-        <SwitchPreference
+        <android.support.v14.preference.SwitchPreference
             android:key="theme_night_mode"
             android:title="@string/night_mode"/>
 
-    </PreferenceCategory>
+        <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+            android:key="theme_recorder_color"
+            android:title="@string/recorder_color"
+            android:defaultValue="@color/"
+            app:spectrum_colors="@array/pref_theme_recorder_color"/>
 
-    <PreferenceCategory
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
         android:key="about"
         android:title="@string/about">
 
-        <Preference
-            android:key="about_share"
-            android:title="@string/share"/>
-
-        <Preference
+        <android.support.v7.preference.Preference
             android:key="about_help_feedback"
-            android:title="@string/help_feedback"/>
+            android:title="@string/help_feedback"
+            android:summary="@string/send_me_email"/>
 
-        <Preference
+        <android.support.v7.preference.Preference
             android:key="about_rate"
-            android:title="@string/rate"/>
+            android:title="@string/rate_app"
+            android:summary="@string/give_five_stars"/>
 
-        <Preference
+        <android.support.v7.preference.Preference
+            android:key="about_share"
+            android:title="@string/spread_love"
+            android:summary="@string/help_share_app"/>
+
+        <android.support.v7.preference.Preference
             android:key="about_version"
-            android:title="@string/version"/>
+            android:title="@string/version"
+            android:summary="@string/VERSION_NAME"/>
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>
