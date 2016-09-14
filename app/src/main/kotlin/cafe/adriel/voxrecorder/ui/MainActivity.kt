@@ -1,12 +1,14 @@
 package cafe.adriel.voxrecorder.ui
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.ui.base.BaseActivity
+import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.recreateWithNightMode
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
@@ -21,12 +23,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbarView)
-
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        fabView.setImageDrawable(IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_mic_none)
-                .color(Color.WHITE)
-                .sizeDp(48))
+        with(fabView) {
+            backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
+            setImageDrawable(IconicsDrawable(context)
+                    .icon(GoogleMaterial.Icon.gmd_mic)
+                    .color(Color.WHITE)
+                    .sizeDp(48))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

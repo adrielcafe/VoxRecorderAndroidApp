@@ -21,8 +21,8 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
-                android:layout_width="53dp"
-                android:layout_height="24dp"
+                android:layout_width="56dp"
+                android:layout_height="25dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/logo"/>
 
@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_btn_speak_now"/>
+        android:layout_margin="@dimen/fab_margin"/>
 
 </android.support.design.widget.CoordinatorLayout>

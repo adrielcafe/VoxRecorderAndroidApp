@@ -76,8 +76,14 @@
     </string-array>
 
     <string-array name="pref_theme_recorder_color">
-        <item>@color/colorPrimary</item>
-        <item>@color/colorAccent</item>
+        <item>@color/turquoise</item>
+        <item>@color/emerald</item>
+        <item>@color/peter_river</item>
+        <item>@color/amethyst</item>
+        <item>@color/sun_flower</item>
+        <item>@color/carrot</item>
+        <item>@color/alizarin</item>
+        <item>@color/wet_asphalt</item>
     </string-array>
 
 </resources>

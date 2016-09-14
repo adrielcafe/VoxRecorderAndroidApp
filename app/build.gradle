@@ -58,13 +58,15 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.tsengvn:typekit:1.0.1@aar'
     compile 'com.thebluealliance:spectrum:0.6.0@aar'
-    compile 'org.greenrobot:eventbus:3.0.0'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
 //    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 //    compile 'com.github.tajchert:nammu:1.1.1@aar'
 
     // Audio
-//    compile 'com.github.adrielcafe:AndroidAudioRecorder:0.0.8@aar'
+//    compile 'com.github.adrielcafe:AndroidAudioRecorder:0.0.9@aar'
+
+    // Core
+    compile 'org.greenrobot:eventbus:3.0.0'
 
 }
 
