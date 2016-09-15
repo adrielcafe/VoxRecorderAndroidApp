@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "0.0.1"
         targetSdkVersion 24
-        resValue "string", "VERSION_NAME", 'v' + versionName
+        resValue "string", "APP_VERSION", 'v' + versionName
     }
     productFlavors {
         dev {
@@ -63,15 +63,10 @@ dependencies {
 //    compile 'com.github.tajchert:nammu:1.1.1@aar'
 
     // Audio
-//    compile 'com.github.adrielcafe:AndroidAudioRecorder:0.0.9@aar'
+//    compile 'com.github.adrielcafe:AndroidAudioRecorder:0.0.9'
+//    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.7'
 
     // Core
     compile 'org.greenrobot:eventbus:3.0.0'
 
-}
-
-repositories {
-    jcenter()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
 }
