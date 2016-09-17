@@ -1,10 +1,9 @@
 package cafe.adriel.voxrecorder
 
 import android.app.Application
-import android.os.Build
+import android.support.v7.preference.PreferenceManager
 import cafe.adriel.voxrecorder.util.Util
 import com.pawegio.kandroid.defaultSharedPreferences
-import com.pawegio.kandroid.e
 import com.tsengvn.typekit.Typekit
 
 class App : Application() {
@@ -17,15 +16,16 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
         Typekit.getInstance()
-                .addNormal(Typekit.createFromAsset(this, "fonts/MerriweatherSans-Regular.ttf"))
-                .addItalic(Typekit.createFromAsset(this, "fonts/MerriweatherSans-Italic.ttf"))
-                .addBold(Typekit.createFromAsset(this, "fonts/MerriweatherSans-Bold.ttf"))
-                .addBoldItalic(Typekit.createFromAsset(this, "fonts/MerriweatherSans-BoldItalic.ttf"))
+                .addNormal(Typekit.createFromAsset(this, "fonts/Asap-Regular.ttf"))
+                .addItalic(Typekit.createFromAsset(this, "fonts/Asap-Italic.ttf"))
+                .addBold(Typekit.createFromAsset(this, "fonts/Asap-Bold.ttf"))
+                .addBoldItalic(Typekit.createFromAsset(this, "fonts/Asap-BoldItalic.ttf"))
         setDefaultAudioFormat()
     }
 
-    fun setDefaultAudioFormat(){
+    private fun setDefaultAudioFormat(){
         if (Util.isAbi86()){
             defaultSharedPreferences.edit()
                     .putString(Constant.PREF_RECORDING_FORMAT, "wav")
