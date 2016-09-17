@@ -20,7 +20,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbarView)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        with(fabView) {
+        fabView.apply {
             backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
             setImageDrawable(IconicsDrawable(context)
                     .icon(GoogleMaterial.Icon.gmd_mic)

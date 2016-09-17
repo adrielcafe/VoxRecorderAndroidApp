@@ -4,7 +4,8 @@
 
     <string name="settings">Settings</string>
     <string name="recording">Recording</string>
-    <string name="file_format">File format</string>
+    <string name="audio_file_format">Audio file format</string>
+    <string name="audio_file_format_unsupported">WAV - Other audio file formats aren\'t supported by your device</string>
     <string name="sample_rate">Sample rate</string>
     <string name="source">Source</string>
     <string name="channel">Channel</string>
@@ -23,17 +24,19 @@
 
     <string-array name="pref_recording_format_titles">
         <item>WAV</item>
-        <item>MP3</item>
         <item>FLAC</item>
-        <item>OGG</item>
         <item>AAC</item>
+        <item>MP3</item>
+        <item>M4A</item>
+        <item>WMA</item>
     </string-array>
     <string-array name="pref_recording_format_values">
         <item>wav</item>
-        <item>mp3</item>
         <item>flac</item>
-        <item>ogg</item>
         <item>aac</item>
+        <item>mp3</item>
+        <item>m4a</item>
+        <item>wma</item>
     </string-array>
 
     <string-array name="pref_recording_sample_rate_titles">

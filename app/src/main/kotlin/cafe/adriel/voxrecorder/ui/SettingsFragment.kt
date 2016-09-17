@@ -9,6 +9,7 @@ import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
+import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.view.ISettingsView
 import com.thebluealliance.spectrum.SpectrumPreferenceCompat
 
@@ -27,6 +28,13 @@ class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
         findPreference(Constant.PREF_ABOUT_SHARE)?.setOnPreferenceClickListener {
             shareApp()
             true
+        }
+
+        if(Util.isAbi86()) {
+            findPreference(Constant.PREF_RECORDING_FORMAT).apply {
+                isEnabled = false
+                setSummary(R.string.audio_file_format_unsupported)
+            }
         }
     }
 

@@ -9,11 +9,11 @@
 
         <android.support.v7.preference.ListPreference
             android:key="recording_format"
-            android:title="@string/file_format"
+            android:title="@string/audio_file_format"
             android:summary="%s"
             android:entries="@array/pref_recording_format_titles"
             android:entryValues="@array/pref_recording_format_values"
-            android:defaultValue="wav"/>
+            android:defaultValue="aac"/>
 
         <android.support.v7.preference.ListPreference
             android:key="recording_sample_rate"
@@ -21,7 +21,7 @@
             android:summary="%s"
             android:entries="@array/pref_recording_sample_rate_titles"
             android:entryValues="@array/pref_recording_sample_rate_values"
-            android:defaultValue="48000"/>
+            android:defaultValue="44100"/>
 
         <android.support.v7.preference.ListPreference
             android:key="recording_channel"
