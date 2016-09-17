@@ -16,17 +16,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
         Typekit.getInstance()
                 .addNormal(Typekit.createFromAsset(this, "fonts/Asap-Regular.ttf"))
                 .addItalic(Typekit.createFromAsset(this, "fonts/Asap-Italic.ttf"))
                 .addBold(Typekit.createFromAsset(this, "fonts/Asap-Bold.ttf"))
                 .addBoldItalic(Typekit.createFromAsset(this, "fonts/Asap-BoldItalic.ttf"))
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
         setDefaultAudioFormat()
     }
 
     private fun setDefaultAudioFormat(){
-        if (Util.isAbi86()){
+        if (Util.isCpu86()){
             defaultSharedPreferences.edit()
                     .putString(Constant.PREF_RECORDING_FORMAT, "wav")
                     .apply()

@@ -1,12 +1,16 @@
 package cafe.adriel.voxrecorder
 
 import android.net.Uri
+import android.os.Environment
+import java.io.File
 
 object Constant {
 
     val CONTACT_EMAIL = "me@adriel.cafe"
     val GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
     val MARKET_URI = Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
+
+    val RECORDINGS_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdir() }
 
     val PREF_RECORDING = "recording"
     val PREF_RECORDING_FORMAT = "recording_format"

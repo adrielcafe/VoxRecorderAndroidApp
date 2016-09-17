@@ -2,9 +2,7 @@ package cafe.adriel.voxrecorder.model
 
 import android.os.Parcel
 import android.os.Parcelable
-
 import cafe.adriel.voxrecorder.util.getAudioDuration
-import cafe.adriel.voxrecorder.util.isAudioPlayable
 import java.io.File
 import java.util.*
 
@@ -19,7 +17,7 @@ data class AudioRecording (val filePath : String) : Parcelable {
 
     val audioDuration = file.getAudioDuration()
 
-    val audioPlayable = file.isAudioPlayable()
+    val audioPlayable = audioDuration > 0
 
     val date = Date(file.lastModified())
 

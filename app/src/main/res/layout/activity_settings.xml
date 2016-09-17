@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarView"
+            android:id="@+id/vToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        android:id="@+id/mainFrag"
+        android:id="@+id/fSettings"
         android:name="cafe.adriel.voxrecorder.ui.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

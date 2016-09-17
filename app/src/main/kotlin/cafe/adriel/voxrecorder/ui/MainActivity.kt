@@ -1,5 +1,6 @@
 package cafe.adriel.voxrecorder.ui
 
+import android.Manifest
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -9,6 +10,8 @@ import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.ui.base.BaseActivity
 import cafe.adriel.voxrecorder.util.Util
+import cafe.adriel.voxrecorder.util.setFontIcon
+import com.github.jksiezni.permissive.Permissive
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.pawegio.kandroid.IntentFor
@@ -19,9 +22,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbarView)
+        setSupportActionBar(vToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        fabView.apply {
+        vFab.apply {
             backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
             setOnClickListener { newRecording() }
             setImageDrawable(IconicsDrawable(context)
@@ -29,14 +32,32 @@ class MainActivity : BaseActivity() {
                     .color(if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
                     .sizeDp(48))
         }
+
+        // TODO
+        Permissive.Request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withRationale({ activity, allowablePermissions, messenger ->
+//                    Snackbar.make(lRoot, R.string., Snackbar.LENGTH_LONG)
+//                            .setAction(R.string., {
+//                                messenger.cancelRequest()
+//                            })
+//                            .show()
+                })
+                .whenPermissionsGranted({
+
+                })
+                .whenPermissionsRefused({
+
+                })
+                .execute(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
-        menu?.findItem(R.id.settings)?.icon = IconicsDrawable(this)
-                .icon(GoogleMaterial.Icon.gmd_tune)
-                .color(Color.WHITE)
-                .sizeDp(24)
+        menu?.apply {
+            findItem(R.id.buy)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
+            findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_filter_list)
+            findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)
+        }
         return true
     }
 

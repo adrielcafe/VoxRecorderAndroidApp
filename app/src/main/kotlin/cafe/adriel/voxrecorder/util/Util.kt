@@ -24,7 +24,7 @@ object Util {
     fun isRecorderColorBright() = cafe.adriel.androidaudiorecorder.Util
             .isBrightColor(getRecorderColor())
 
-    fun isAbi86() : Boolean {
+    fun isCpu86() : Boolean {
         var abi86 = false
         fromApi(21){
             abi86 = Build.SUPPORTED_ABIS.any { it.contains("86") }

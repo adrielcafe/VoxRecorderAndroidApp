@@ -1,36 +1,37 @@
 package cafe.adriel.voxrecorder.util
 
+import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import cafe.adriel.voxrecorder.App
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.IconicsDrawable
 import java.io.File
 
-fun AppCompatActivity.recreateWithThemeMode(){
+fun AppCompatActivity.recreateWithThemeMode() {
     delegate.setLocalNightMode(Util.getThemeMode())
     recreate()
 }
 
+fun MenuItem.setFontIcon(icon : GoogleMaterial.Icon) {
+    setIcon(IconicsDrawable(App.instance)
+            .icon(icon)
+            .color(Color.WHITE)
+            .sizeDp(24))
+}
+
 fun File.getAudioDuration() : Float {
     try {
-        val mmr = MediaMetadataRetriever()
-        mmr.setDataSource(path)
-        val duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-        mmr.release()
+        var duration = ""
+        MediaMetadataRetriever().apply {
+            setDataSource(path)
+            duration = extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            release()
+        }
         return duration.toFloat() / 1000
     } catch (e : Exception){
         e.printStackTrace()
         return 0f
-    }
-}
-
-// Because can be corrupted
-fun File.isAudioPlayable() : Boolean {
-    try {
-        val mmr = MediaMetadataRetriever()
-        mmr.setDataSource(path)
-        mmr.release()
-        return true
-    } catch (e : Exception){
-        e.printStackTrace()
-        return false
     }
 }

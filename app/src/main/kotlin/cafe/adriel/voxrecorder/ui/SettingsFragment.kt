@@ -17,6 +17,12 @@ class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(Util.isCpu86()) {
+            findPreference(Constant.PREF_RECORDING_FORMAT).apply {
+                isEnabled = false
+                setSummary(R.string.audio_file_format_unsupported)
+            }
+        }
         findPreference(Constant.PREF_ABOUT_HELP_FEEDBACK)?.setOnPreferenceClickListener {
             sendFeedback()
             true
@@ -28,13 +34,6 @@ class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
         findPreference(Constant.PREF_ABOUT_SHARE)?.setOnPreferenceClickListener {
             shareApp()
             true
-        }
-
-        if(Util.isAbi86()) {
-            findPreference(Constant.PREF_RECORDING_FORMAT).apply {
-                isEnabled = false
-                setSummary(R.string.audio_file_format_unsupported)
-            }
         }
     }
 
