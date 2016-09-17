@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:key="recording"
+        android:title="@string/recording">
+
+        <android.support.v7.preference.ListPreference
+            android:key="recording_format"
+            android:title="@string/audio_file_format"
+            android:summary="%s"
+            android:entries="@array/pref_recording_format_titles"
+            android:entryValues="@array/pref_recording_format_values"
+            android:defaultValue="aac"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="recording_sample_rate"
+            android:title="@string/sample_rate"
+            android:summary="%s"
+            android:entries="@array/pref_recording_sample_rate_titles"
+            android:entryValues="@array/pref_recording_sample_rate_values"
+            android:defaultValue="44100"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="recording_channel"
+            android:title="@string/channel"
+            android:summary="%s"
+            android:entries="@array/pref_recording_channel_titles"
+            android:entryValues="@array/pref_recording_channel_values"
+            android:defaultValue="stereo"/>
+
+        <android.support.v7.preference.ListPreference
+            android:key="recording_source"
+            android:title="@string/source"
+            android:summary="%s"
+            android:entries="@array/pref_recording_source_titles"
+            android:entryValues="@array/pref_recording_source_values"
+            android:defaultValue="mic"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:key="theme"
+        android:title="@string/theme">
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="theme_dark_mode"
+            android:title="@string/dark_mode"
+            android:defaultValue="false"/>
+
+        <com.thebluealliance.spectrum.SpectrumPreferenceCompat
+            android:key="theme_recorder_color"
+            android:title="@string/recorder_color"
+            android:defaultValue="@color/carrot"
+            app:spectrum_columnCount="4"
+            app:spectrum_colors="@array/pref_theme_recorder_color"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:key="about"
+        android:title="@string/about">
+
+        <android.support.v7.preference.Preference
+            android:key="about_help_feedback"
+            android:title="@string/help_feedback"
+            android:summary="@string/send_me_email"/>
+
+        <android.support.v7.preference.Preference
+            android:key="about_rate"
+            android:title="@string/rate_app"
+            android:summary="@string/give_five_stars"/>
+
+        <android.support.v7.preference.Preference
+            android:key="about_share"
+            android:title="@string/spread_love"
+            android:summary="@string/help_share_app"/>
+
+        <android.support.v7.preference.Preference
+            android:key="about_version"
+            android:title="@string/version"
+            android:summary="@string/app_version"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

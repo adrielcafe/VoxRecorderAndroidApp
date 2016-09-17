@@ -3,29 +3,32 @@ package cafe.adriel.voxrecorder.model
 import android.os.Parcel
 import android.os.Parcelable
 
+import cafe.adriel.voxrecorder.util.getAudioDuration
+import cafe.adriel.voxrecorder.util.isAudioPlayable
 import java.io.File
-import java.io.Serializable
 import java.util.*
 
-data class AudioRecording (var file : File,  var duration: Float) : Parcelable {
+data class AudioRecording (val filePath : String) : Parcelable {
+    val file = File(filePath)
 
-    fun getFileName() = file.nameWithoutExtension
+    val fileName = file.nameWithoutExtension
 
-    fun getFileExtension() = file.extension
+    val fileExtension = file.extension
 
-    fun getFileSizeInKb() = file.length() / 1024
+    val fileSizeKb = file.length().toFloat() / 1024
 
-    fun getFileSizeInMb() = getFileSizeInKb() / 1024
+    val audioDuration = file.getAudioDuration()
 
-    fun getFileDate() = Date(file.lastModified())
+    val audioPlayable = file.isAudioPlayable()
 
-    constructor(source: Parcel): this(source.readSerializable() as File, source.readFloat())
+    val date = Date(file.lastModified())
+
+    constructor(source: Parcel): this(source.readString())
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeSerializable(file)
-        dest?.writeFloat(duration)
+        dest?.writeString(filePath)
     }
 
     companion object {
@@ -34,5 +37,4 @@ data class AudioRecording (var file : File,  var duration: Float) : Parcelable {
             override fun newArray(size: Int): Array<AudioRecording?> = arrayOfNulls(size)
         }
     }
-
 }

@@ -1,3 +1,92 @@
 <resources>
-    <string name="app_name">VoxRecorder</string>
+
+    <string name="app_name" translatable="false">Vox Recorder</string>
+
+    <string name="settings">Settings</string>
+    <string name="recording">Recording</string>
+    <string name="audio_file_format">Audio file format</string>
+    <string name="audio_file_format_unsupported">WAV - Other audio file formats aren\'t supported by your device</string>
+    <string name="sample_rate">Sample rate</string>
+    <string name="source">Source</string>
+    <string name="channel">Channel</string>
+    <string name="theme">Theme</string>
+    <string name="recorder_color">Recorder color</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="about">About</string>
+    <string name="spread_love">Spread the love</string>
+    <string name="help_share_app">Share Vox with your friends</string>
+    <string name="you_should_give_try_vox">You should give a try to Vox Recorder app, it\'s really awesome!</string>
+    <string name="help_feedback">Help &amp; feedback</string>
+    <string name="send_me_email">Send me an email</string>
+    <string name="rate_app">Rate the app</string>
+    <string name="give_five_stars">Give 5 stars to Vox!</string>
+    <string name="version">Version</string>
+
+    <string-array name="pref_recording_format_titles">
+        <item>WAV</item>
+        <item>FLAC</item>
+        <item>AAC</item>
+        <item>MP3</item>
+        <item>M4A</item>
+        <item>WMA</item>
+    </string-array>
+    <string-array name="pref_recording_format_values">
+        <item>wav</item>
+        <item>flac</item>
+        <item>aac</item>
+        <item>mp3</item>
+        <item>m4a</item>
+        <item>wma</item>
+    </string-array>
+
+    <string-array name="pref_recording_sample_rate_titles">
+        <item>48000 Hz</item>
+        <item>44100 Hz</item>
+        <item>32000 Hz</item>
+        <item>22050 Hz</item>
+        <item>16000 Hz</item>
+        <item>11025 Hz</item>
+        <item>8000 Hz</item>
+    </string-array>
+    <string-array name="pref_recording_sample_rate_values">
+        <item>48000</item>
+        <item>44100</item>
+        <item>32000</item>
+        <item>22050</item>
+        <item>16000</item>
+        <item>11025</item>
+        <item>8000</item>
+    </string-array>
+
+    <string-array name="pref_recording_channel_titles">
+        <item>Stereo</item>
+        <item>Mono</item>
+    </string-array>
+    <string-array name="pref_recording_channel_values">
+        <item>stereo</item>
+        <item>mono</item>
+    </string-array>
+
+    <string-array name="pref_recording_source_titles">
+        <item>Mic</item>
+        <item>Camcorder</item>
+        <item>System Default</item>
+    </string-array>
+    <string-array name="pref_recording_source_values">
+        <item>mic</item>
+        <item>camcorder</item>
+        <item>system_default</item>
+    </string-array>
+
+    <string-array name="pref_theme_recorder_color">
+        <item>@color/turquoise</item>
+        <item>@color/peter_river</item>
+        <item>@color/amethyst</item>
+        <item>@color/sun_flower</item>
+        <item>@color/carrot</item>
+        <item>@color/alizarin</item>
+        <item>@color/clouds</item>
+        <item>@color/wet_asphalt</item>
+    </string-array>
+
 </resources>

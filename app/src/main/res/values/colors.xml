@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">@color/wet_asphalt</color>
+    <color name="colorPrimaryDark">#2C3E50</color>
+    <color name="colorAccent">#D35400</color>
+
+    <color name="turquoise">#1ABC9C</color>
+    <color name="peter_river">#3498DB</color>
+    <color name="amethyst">#9B59B6</color>
+    <color name="sun_flower">#F1C40F</color>
+    <color name="carrot">#E67E22</color>
+    <color name="alizarin">#E74C3C</color>
+    <color name="clouds">#ECF0F1</color>
+    <color name="wet_asphalt">#34495E</color>
+
 </resources>
