@@ -14,14 +14,10 @@ class MainFragment : BaseFragment(), IMainView {
 
     val mainPresenter : IMainPresenter = MainPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater?.inflate(R.layout.fragment_main, container, false)
 
         return rootView ?: super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun newRecording() {
-
     }
 
     override fun playRecording() {

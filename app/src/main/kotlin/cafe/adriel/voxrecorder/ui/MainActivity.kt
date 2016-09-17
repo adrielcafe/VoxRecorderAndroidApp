@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.ui.base.BaseActivity
 import cafe.adriel.voxrecorder.util.Util
@@ -22,9 +23,10 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         fabView.apply {
             backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
+            setOnClickListener { newRecording() }
             setImageDrawable(IconicsDrawable(context)
                     .icon(GoogleMaterial.Icon.gmd_mic)
-                    .color(Color.WHITE)
+                    .color(if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
                     .sizeDp(48))
         }
     }
@@ -46,6 +48,12 @@ class MainActivity : BaseActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun newRecording(){
+        AndroidAudioRecorder.with(this)
+                .setColor(Util.getRecorderColor())
+                .record()
     }
 
 }

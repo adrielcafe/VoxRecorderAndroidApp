@@ -8,7 +8,7 @@ import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.ui.SettingsActivity
-import cafe.adriel.voxrecorder.util.recreateWithNightMode
+import cafe.adriel.voxrecorder.util.recreateWithThemeMode
 import com.mikepenz.iconics.context.IconicsLayoutInflater
 import com.tinsuke.icekick.freezeInstanceState
 import com.tinsuke.icekick.state
@@ -23,10 +23,9 @@ open class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefere
         LayoutInflaterCompat.setFactory(layoutInflater, IconicsLayoutInflater(delegate))
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
-            recreateWithNightMode()
+            recreateWithThemeMode()
         }
         unfreezeInstanceState(savedInstanceState)
-
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this)
     }
@@ -44,10 +43,15 @@ open class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefere
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when(key){
-            Constant.PREF_THEME_NIGHT_MODE -> {
+            Constant.PREF_THEME_DARK_MODE -> {
                 if(this is SettingsActivity){
-                    recreateWithNightMode()
+                    recreateWithThemeMode()
                 } else {
+                    shouldRecreateOnFocus = true
+                }
+            }
+            Constant.PREF_THEME_RECORDER_COLOR -> {
+                if(this !is SettingsActivity){
                     shouldRecreateOnFocus = true
                 }
             }
@@ -58,7 +62,7 @@ open class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefere
         super.onWindowFocusChanged(hasFocus)
         if(hasFocus && shouldRecreateOnFocus){
             shouldRecreateOnFocus = false
-            recreateWithNightMode()
+            recreateWithThemeMode()
         }
     }
 

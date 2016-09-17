@@ -11,15 +11,18 @@ import com.pawegio.kandroid.toApi
 
 object Util {
 
-    fun getNightMode() : Int {
+    fun getThemeMode() : Int {
         val isNightMode = App.instance.defaultSharedPreferences
-                .getBoolean(Constant.PREF_THEME_NIGHT_MODE, false)
+                .getBoolean(Constant.PREF_THEME_DARK_MODE, false)
         return if(isNightMode) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
     }
 
     fun getRecorderColor() = App.instance.defaultSharedPreferences
-                .getInt(Constant.PREF_THEME_RECORDER_COLOR, App.instance.getColor(R.color.amethyst))
+            .getInt(Constant.PREF_THEME_RECORDER_COLOR, App.instance.getColor(R.color.amethyst))
+
+    fun isRecorderColorBright() = cafe.adriel.androidaudiorecorder.Util
+            .isBrightColor(getRecorderColor())
 
     fun isAbi86() : Boolean {
         var abi86 = false

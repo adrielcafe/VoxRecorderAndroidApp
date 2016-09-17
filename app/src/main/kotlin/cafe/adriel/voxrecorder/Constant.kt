@@ -14,7 +14,7 @@ object Constant {
     val PREF_RECORDING_CHANNEL = "recording_channel"
     val PREF_RECORDING_SOURCE = "recording_source"
     val PREF_THEME = "theme"
-    val PREF_THEME_NIGHT_MODE = "theme_night_mode"
+    val PREF_THEME_DARK_MODE = "theme_dark_mode"
     val PREF_THEME_RECORDER_COLOR = "theme_recorder_color"
     val PREF_ABOUT = "about"
     val PREF_ABOUT_HELP_FEEDBACK = "about_help_feedback"

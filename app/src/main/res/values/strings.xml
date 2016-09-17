@@ -11,7 +11,7 @@
     <string name="channel">Channel</string>
     <string name="theme">Theme</string>
     <string name="recorder_color">Recorder color</string>
-    <string name="night_mode">Night mode</string>
+    <string name="dark_mode">Dark mode</string>
     <string name="about">About</string>
     <string name="spread_love">Spread the love</string>
     <string name="help_share_app">Share Vox with your friends</string>
@@ -80,12 +80,12 @@
 
     <string-array name="pref_theme_recorder_color">
         <item>@color/turquoise</item>
-        <item>@color/emerald</item>
         <item>@color/peter_river</item>
         <item>@color/amethyst</item>
         <item>@color/sun_flower</item>
         <item>@color/carrot</item>
         <item>@color/alizarin</item>
+        <item>@color/clouds</item>
         <item>@color/wet_asphalt</item>
     </string-array>
 
