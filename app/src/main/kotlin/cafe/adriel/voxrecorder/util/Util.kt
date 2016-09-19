@@ -2,29 +2,25 @@ package cafe.adriel.voxrecorder.util
 
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
-import cafe.adriel.voxrecorder.App
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
-import com.pawegio.kandroid.defaultSharedPreferences
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
+import org.ocpsoft.prettytime.PrettyTime
 
 object Util {
 
-    fun getThemeMode() : Int {
-        val isNightMode = App.instance.defaultSharedPreferences
-                .getBoolean(Constant.PREF_THEME_DARK_MODE, false)
-        return if(isNightMode) AppCompatDelegate.MODE_NIGHT_YES
-                else AppCompatDelegate.MODE_NIGHT_NO
-    }
+    val prettyTime = PrettyTime()
 
-    fun getRecorderColor() = App.instance.defaultSharedPreferences
-            .getInt(Constant.PREF_THEME_RECORDER_COLOR, App.instance.getColor(R.color.amethyst))
+    fun isDarkTheme() = pref().getBoolean(Constant.PREF_THEME_DARK_MODE, false)
 
-    fun isRecorderColorBright() = cafe.adriel.androidaudiorecorder.Util
-            .isBrightColor(getRecorderColor())
+    fun getThemeMode() = if(isDarkTheme()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
 
-    fun isCpu86() : Boolean {
+    fun getRecorderColor() = pref().getInt(Constant.PREF_THEME_RECORDER_COLOR, color(R.color.peter_river))
+
+    fun isRecorderColorBright() = cafe.adriel.androidaudiorecorder.Util.isBrightColor(getRecorderColor())
+
+    fun isCpu86(): Boolean {
         var abi86 = false
         fromApi(21){
             abi86 = Build.SUPPORTED_ABIS.any { it.contains("86") }
@@ -34,4 +30,5 @@ object Util {
         }
         return abi86
     }
+
 }

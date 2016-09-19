@@ -3,7 +3,9 @@
 
     <color name="colorPrimary">@color/wet_asphalt</color>
     <color name="colorPrimaryDark">#2C3E50</color>
-    <color name="colorAccent">#D35400</color>
+    <color name="colorAccent">#3498db</color>
+
+    <color name="grey_alpha">#33888888</color>
 
     <color name="turquoise">#1ABC9C</color>
     <color name="peter_river">#3498DB</color>
@@ -13,5 +15,7 @@
     <color name="alizarin">#E74C3C</color>
     <color name="clouds">#ECF0F1</color>
     <color name="wet_asphalt">#34495E</color>
+
+    <color name="recording_menu_bg">@color/clouds</color>
 
 </resources>

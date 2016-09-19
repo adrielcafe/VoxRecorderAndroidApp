@@ -1,4 +1,4 @@
-package cafe.adriel.voxrecorder.ui
+package cafe.adriel.voxrecorder.view.ui
 
 import android.content.ClipDescription
 import android.content.Intent
@@ -10,10 +10,11 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.util.Util
+import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.ISettingsView
 import com.thebluealliance.spectrum.SpectrumPreferenceCompat
 
-class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
+class SettingsFragment: PreferenceFragmentCompat(), ISettingsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +49,10 @@ class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
     }
 
     override fun sendFeedback(){
-        val subject = "${getString(R.string.app_name)} - ${getString(R.string.help_feedback)}"
+        val subject = "${string(R.string.app_name)} - ${string(R.string.help_feedback)}"
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto: ${Constant.CONTACT_EMAIL}"))
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        startActivity(Intent.createChooser(intent, getString(R.string.send_me_email)))
+        startActivity(Intent.createChooser(intent, string(R.string.send_me_email)))
     }
 
     override fun rateApp(){
@@ -60,7 +61,7 @@ class SettingsFragment : PreferenceFragmentCompat(), ISettingsView {
     }
 
     override fun shareApp(){
-        val text = "${getString(R.string.you_should_give_try_vox)} \n ${Constant.GOOGLE_PLAY_URL}"
+        val text = "${string(R.string.you_should_give_try_vox)} \n ${Constant.GOOGLE_PLAY_URL}"
         ShareCompat.IntentBuilder.from(activity)
                 .setType(ClipDescription.MIMETYPE_TEXT_PLAIN)
                 .setText(text)

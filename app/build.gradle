@@ -57,6 +57,8 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.tsengvn:typekit:1.0.1@aar'
     compile 'com.thebluealliance:spectrum:0.6.0@aar'
+    compile 'org.zakariya.flyoutmenus:flyoutmenu:0.5.3@aar'
+    compile 'com.github.iammert:ProgressLayout:-SNAPSHOT'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
 
     // Audio
@@ -64,6 +66,7 @@ dependencies {
 //    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 
     // Core
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.jksiezni.permissive:permissive:0.1@aar'
 //    compile 'com.github.hotchemi:android-rate:1.0.1@aar'

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.SettingsActivity">
+    tools:context=".view.ui.SettingsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/fSettings"
-        android:name="cafe.adriel.voxrecorder.ui.SettingsFragment"
+        android:name="cafe.adriel.voxrecorder.view.ui.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"/>

@@ -13,20 +13,22 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:allowBackup="true">
         <activity
-            android:name=".ui.MainActivity"
-            android:launchMode="singleTask">
+            android:name="cafe.adriel.voxrecorder.view.ui.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name="cafe.adriel.voxrecorder.view.ui.SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName="cafe.adriel.voxrecorder.view.ui.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value="cafe.adriel.voxrecorder.view.ui.MainActivity" />
         </activity>
     </application>
 

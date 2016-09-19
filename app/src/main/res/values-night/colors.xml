@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="recording_menu_bg">@color/colorPrimaryDark</color>
+
+</resources>

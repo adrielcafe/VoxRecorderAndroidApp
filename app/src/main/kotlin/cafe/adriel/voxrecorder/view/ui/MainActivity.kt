@@ -1,4 +1,4 @@
-package cafe.adriel.voxrecorder.ui
+package cafe.adriel.voxrecorder.view.ui
 
 import android.Manifest
 import android.content.res.ColorStateList
@@ -8,15 +8,15 @@ import android.view.Menu
 import android.view.MenuItem
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.ui.base.BaseActivity
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
+import cafe.adriel.voxrecorder.view.ui.base.BaseActivity
 import com.github.jksiezni.permissive.Permissive
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.IntentFor
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +60,14 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
+            R.id.buy -> {
+                // TODO
+                return true
+            }
+            R.id.filter -> {
+                // TODO
+                return true
+            }
             R.id.settings -> {
                 startActivity(IntentFor<SettingsActivity>(this))
                 return true
@@ -68,6 +76,7 @@ class MainActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // TODO
     fun newRecording(){
         AndroidAudioRecorder.with(this)
                 .setColor(Util.getRecorderColor())

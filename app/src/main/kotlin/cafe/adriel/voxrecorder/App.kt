@@ -1,15 +1,16 @@
 package cafe.adriel.voxrecorder
 
 import android.app.Application
+import android.content.Context
 import android.support.v7.preference.PreferenceManager
 import cafe.adriel.voxrecorder.util.Util
 import com.pawegio.kandroid.defaultSharedPreferences
 import com.tsengvn.typekit.Typekit
 
-class App : Application() {
+class App: Application() {
 
     companion object {
-        lateinit var instance : App
+        lateinit var instance: Context
             private set
     }
 

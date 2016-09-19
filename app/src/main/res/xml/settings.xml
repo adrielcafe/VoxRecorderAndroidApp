@@ -53,7 +53,7 @@
         <com.thebluealliance.spectrum.SpectrumPreferenceCompat
             android:key="theme_recorder_color"
             android:title="@string/recorder_color"
-            android:defaultValue="@color/carrot"
+            android:defaultValue="@color/peter_river"
             app:spectrum_columnCount="4"
             app:spectrum_colors="@array/pref_theme_recorder_color"/>
 
