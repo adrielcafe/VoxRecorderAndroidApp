@@ -4,6 +4,7 @@ import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
 import org.ocpsoft.prettytime.PrettyTime
@@ -30,5 +31,9 @@ object Util {
         }
         return abi86
     }
+
+    fun getPlayIcon() = GoogleMaterial.Icon.gmd_play_arrow.formattedName
+
+    fun getPauseIcon() = GoogleMaterial.Icon.gmd_pause.formattedName
 
 }

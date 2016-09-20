@@ -15,7 +15,7 @@ import com.tinsuke.icekick.state
 import com.tinsuke.icekick.unfreezeInstanceState
 import com.tsengvn.typekit.TypekitContextWrapper
 
-open class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     var shouldRecreateOnFocus by state(false)
 

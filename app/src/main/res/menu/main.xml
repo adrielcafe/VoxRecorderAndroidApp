@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/buy"
-        android:title="@string/buy"
+        android:id="@+id/upgrade_pro"
+        android:title="@string/upgrade_pro"
         app:showAsAction="ifRoom"/>
 
     <item

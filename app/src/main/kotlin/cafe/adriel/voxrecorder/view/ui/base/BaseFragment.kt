@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import com.tinsuke.icekick.freezeInstanceState
 import com.tinsuke.icekick.unfreezeInstanceState
 
-open class BaseFragment: Fragment() {
+abstract class BaseFragment: Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

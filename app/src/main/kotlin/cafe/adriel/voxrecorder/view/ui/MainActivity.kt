@@ -29,9 +29,12 @@ class MainActivity: BaseActivity() {
                     if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
             setOnClickListener { newRecording() }
         }
+    }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         // TODO
-        Permissive.Request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        Permissive.Request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withRationale({ activity, allowablePermissions, messenger ->
 //                    Snackbar.make(lRoot, R.string., Snackbar.LENGTH_LONG)
 //                            .setAction(R.string., {
@@ -40,7 +43,9 @@ class MainActivity: BaseActivity() {
 //                            .show()
                 })
                 .whenPermissionsGranted({
-
+                    if(fMain != null) {
+                        (fMain as MainFragment).init()
+                    }
                 })
                 .whenPermissionsRefused({
 
@@ -51,7 +56,7 @@ class MainActivity: BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         menu?.apply {
-            findItem(R.id.buy)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
+            findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
             findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
             findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)
         }
@@ -60,7 +65,7 @@ class MainActivity: BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
-            R.id.buy -> {
+            R.id.upgrade_pro -> {
                 // TODO
                 return true
             }

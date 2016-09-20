@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.util.drawable
 
-class RecyclerItemDecoration : RecyclerView.ItemDecoration() {
+class RecyclerItemDecoration: RecyclerView.ItemDecoration() {
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val divider = drawable(R.drawable.list_item_divider)
