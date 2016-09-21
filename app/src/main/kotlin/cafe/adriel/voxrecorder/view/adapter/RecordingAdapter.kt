@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.model.Recording
+import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.prettyDate
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.list_item_recording.view.*
 import org.zakariya.flyoutmenu.FlyoutMenuView
 import java.util.*
 
-class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<RecordingAdapter.ViewHolder>(), IRecordingView {
+class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<RecordingAdapter.ViewHolder>() {
 
     val recordings = ArrayList<Recording>()
 
@@ -37,9 +37,11 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
     }
 
     fun updateRecordings(newRecordings: List<Recording>) {
-        recordings.clear()
-        recordings.addAll(newRecordings)
-        notifyItemRangeChanged(0, recordings.size - 1)
+        recordings.apply {
+            clear()
+            addAll(newRecordings)
+            notifyItemRangeChanged(0, size - 1)
+        }
     }
 
     fun onRecordingEdited(recording: Recording) {
@@ -50,7 +52,7 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
 
     }
 
-    inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v){
+    inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v), IRecordingView {
         fun bind(recording: Recording){
             v.tag = this
             v.vTitle.text = recording.name
@@ -64,56 +66,63 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
         }
 
         private fun bindMenu(recording: Recording) {
-            val menuItems = ArrayList<RecyclerItemMenu.MenuItem>()
-            menuItems.add(RecyclerItemMenu.MenuItem(0, GoogleMaterial.Icon.gmd_share))
-            menuItems.add(RecyclerItemMenu.MenuItem(1, GoogleMaterial.Icon.gmd_edit))
-            menuItems.add(RecyclerItemMenu.MenuItem(2, GoogleMaterial.Icon.gmd_delete))
-            v.vMenu.layout = FlyoutMenuView.GridLayout(3, FlyoutMenuView.GridLayout.UNSPECIFIED)
-            v.vMenu.adapter = FlyoutMenuView.ArrayAdapter(menuItems)
-            v.vMenu.buttonRenderer = RecyclerItemMenu.ButtonRenderer()
-            v.vMenu.selectionListener = object: FlyoutMenuView.SelectionListener {
-                override fun onItemSelected(flyoutMenuView: FlyoutMenuView?, item: FlyoutMenuView.MenuItem?) {
-                    onMenuItemSelected(recording, item?.id ?: -1)
-                }
-                override fun onDismissWithoutSelection(flyoutMenuView: FlyoutMenuView?) {
+            val menuItems = ArrayList<RecyclerItemMenu.MenuItem>().apply {
+                add(RecyclerItemMenu.MenuItem(0, GoogleMaterial.Icon.gmd_share))
+                add(RecyclerItemMenu.MenuItem(1, GoogleMaterial.Icon.gmd_edit))
+                add(RecyclerItemMenu.MenuItem(2, GoogleMaterial.Icon.gmd_delete))
+            }
+            v.vMenu.let {
+                it.layout = FlyoutMenuView.GridLayout(3, FlyoutMenuView.GridLayout.UNSPECIFIED)
+                it.adapter = FlyoutMenuView.ArrayAdapter(menuItems)
+                it.buttonRenderer = RecyclerItemMenu.ButtonRenderer()
+                it.selectionListener = object: FlyoutMenuView.SelectionListener {
+                    override fun onItemSelected(flyoutMenuView: FlyoutMenuView?, item: FlyoutMenuView.MenuItem?) {
+                        onMenuItemSelected(recording, item?.id ?: -1)
+                    }
+                    override fun onDismissWithoutSelection(flyoutMenuView: FlyoutMenuView?) {
 
+                    }
                 }
             }
         }
 
         private fun bindControl(recording: Recording){
-            v.vControl.text = Util.getPlayIcon()
-            v.vControl.setOnClickListener {
-                if(v.vProgress.isPlaying){
-                    presenter.pause(recording)
-                } else {
-                    presenter.play(recording)
+            v.vControl.let {
+                it.text = Util.getPlayIcon()
+                it.setOnClickListener {
+                    if(v.vProgress.isPlaying){
+                        presenter.pause(recording)
+                    } else {
+                        presenter.play(recording)
+                    }
                 }
-            }
-            v.vControl.setOnLongClickListener {
-                presenter.stop(recording)
-                true
+                it.setOnLongClickListener {
+                    presenter.stop(recording)
+                    true
+                }
             }
         }
 
         private fun bindProgress(recording: Recording){
-            v.vProgress.setMaxProgress(recording.duration)
-            v.vProgress.setOnTouchListener { v, motionEvent ->
-                val playTime = (motionEvent.x * recording.duration) / v.width
-                presenter.setPlayTime(recording, playTime.toInt())
-                true
+            v.vProgress.let {
+                it.setMaxProgress(recording.duration)
+                it.setOnTouchListener { v, motionEvent ->
+                    val playTime = (motionEvent.x * recording.duration) / v.width
+                    presenter.setPlayTime(recording, playTime.toInt())
+                    true
+                }
+                it.setProgressLayoutListener(object: ProgressLayoutListener {
+                    override fun onProgressChanged(seconds: Int) {
+                        presenter.updatePlayedTime(recording, seconds)
+                    }
+                    override fun onProgressCompleted() {
+                        presenter.stop(recording)
+                    }
+                })
             }
-            v.vProgress.setProgressLayoutListener(object: ProgressLayoutListener {
-                override fun onProgressChanged(seconds: Int) {
-                    presenter.updatePlayedTime(recording, seconds)
-                }
-                override fun onProgressCompleted() {
-                    presenter.stop(recording)
-                }
-            })
         }
 
-        fun onMenuItemSelected(recording: Recording, menuId: Int) {
+        override fun onMenuItemSelected(recording: Recording, menuId: Int) {
             when(menuId){
                 0 -> presenter.share(recording)
                 1 -> presenter.edit(recording)
@@ -121,34 +130,34 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
             }
         }
 
-        fun onPlay() {
-            v.vPlayedDuration.text = "00:00:00"
-            v.vPlayedDuration.visibility = View.INVISIBLE
-            v.vControl.text = Util.getPlayIcon()
-            v.vProgress.start()
-        }
-
-        fun onPause() {
+        override fun onPlay() {
             v.vPlayedDuration.text = "00:00:00"
             v.vPlayedDuration.visibility = View.VISIBLE
             v.vControl.text = Util.getPauseIcon()
+            v.vProgress.start()
+        }
+
+        override fun onPause() {
+            v.vPlayedDuration.text = "00:00:00"
+            v.vPlayedDuration.visibility = View.INVISIBLE
+            v.vControl.text = Util.getPlayIcon()
             v.vProgress.stop()
         }
 
-        fun onStop() {
+        override fun onStop() {
             v.vPlayedDuration.visibility = View.INVISIBLE
             v.vPlayedDuration.text = "00:00:00"
             v.vControl.text = Util.getPlayIcon()
             v.vProgress.cancel()
         }
 
-        fun onSetPlayTime(playTime: Int) {
+        override fun onSetPlayTime(playTime: Int) {
             if(v.vProgress.isPlaying) {
                 v.vProgress.setCurrentProgress(playTime)
             }
         }
 
-        fun onUpdatePlayedTime(playedTime: Int) {
+        override fun onUpdatePlayedTime(playedTime: Int) {
             v.vPlayedDuration.text = playedTime.prettyDuration()
         }
     }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.model.Recording
+import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.MainPresenter
 import cafe.adriel.voxrecorder.view.IMainView
 import cafe.adriel.voxrecorder.view.adapter.RecordingAdapter
@@ -21,12 +21,14 @@ class MainFragment: BaseFragment(), IMainView {
     var layoutManager: LinearLayoutManager? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_main, container, false)
         layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        view?.vRecordings?.setHasFixedSize(true)
-        view?.vRecordings?.addItemDecoration(RecyclerItemDecoration())
-        view?.vRecordings?.adapter = adapter
-        view?.vRecordings?.layoutManager = layoutManager
+        val view = inflater?.inflate(R.layout.fragment_main, container, false)
+        view?.vRecordings?.let {
+            it.setHasFixedSize(true)
+            it.addItemDecoration(RecyclerItemDecoration())
+            it.adapter = adapter
+            it.layoutManager = this@MainFragment.layoutManager
+        }
         return view ?: super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -63,7 +65,7 @@ class MainFragment: BaseFragment(), IMainView {
     }
 
     fun init(){
-        presenter.loadRecordings()
+        presenter.load()
     }
 
     fun getRecordingViewHolder(recording: Recording): RecordingAdapter.ViewHolder {

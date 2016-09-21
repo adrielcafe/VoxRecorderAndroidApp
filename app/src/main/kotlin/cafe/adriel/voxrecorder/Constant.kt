@@ -10,16 +10,17 @@ object Constant {
     val GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
     val MARKET_URI = Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
 
-    val RECORDINGS_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdir() }
+    val RECORDING_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdir() }
+    val SUPPORTED_EXTENSIONS = arrayOf("aac", "mp3", "m4a", "wma", "wav", "flac")
 
+    val PREF_THEME = "theme"
+    val PREF_THEME_DARK_MODE = "theme_dark_mode"
+    val PREF_THEME_RECORDER_COLOR = "theme_recorder_color"
     val PREF_RECORDING = "recording"
     val PREF_RECORDING_FORMAT = "recording_format"
     val PREF_RECORDING_SAMPLE_RATE = "recording_sample_rate"
     val PREF_RECORDING_CHANNEL = "recording_channel"
     val PREF_RECORDING_SOURCE = "recording_source"
-    val PREF_THEME = "theme"
-    val PREF_THEME_DARK_MODE = "theme_dark_mode"
-    val PREF_THEME_RECORDER_COLOR = "theme_recorder_color"
     val PREF_ABOUT = "about"
     val PREF_ABOUT_HELP_FEEDBACK = "about_help_feedback"
     val PREF_ABOUT_RATE = "about_rate"

@@ -1,9 +1,9 @@
 package cafe.adriel.voxrecorder.presenter
 
-import cafe.adriel.voxrecorder.model.Recording
+import cafe.adriel.voxrecorder.model.entity.Recording
 
 interface IMainPresenter {
-    fun loadRecordings()
+    fun load()
     fun play(recording: Recording)
     fun pause(recording: Recording)
     fun stop(recording: Recording)

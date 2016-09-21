@@ -1,4 +1,4 @@
-package cafe.adriel.voxrecorder.model
+package cafe.adriel.voxrecorder.model.entity
 
 import android.os.Parcel
 import android.os.Parcelable
