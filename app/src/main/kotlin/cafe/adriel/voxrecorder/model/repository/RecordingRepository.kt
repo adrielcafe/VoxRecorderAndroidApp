@@ -3,6 +3,7 @@ package cafe.adriel.voxrecorder.model.repository
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.model.entity.Recording
 import com.pawegio.kandroid.runAsync
+import com.pawegio.kandroid.runOnUiThread
 
 class RecordingRepository: IRepository<Recording> {
 
@@ -27,7 +28,9 @@ class RecordingRepository: IRepository<Recording> {
             }.sortedByDescending {
                 it.date
             }
-            callback(recordings)
+            runOnUiThread {
+                callback(recordings)
+            }
         }
     }
 

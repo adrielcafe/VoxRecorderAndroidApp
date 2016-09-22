@@ -3,10 +3,8 @@ package cafe.adriel.voxrecorder.view
 import cafe.adriel.voxrecorder.model.entity.Recording
 
 interface IRecordingView {
-    fun onMenuItemSelected(recording: Recording, menuId: Int)
-    fun onPlay()
-    fun onPause()
-    fun onStop()
-    fun onSetPlayTime(playTime: Int)
-    fun onUpdatePlayedTime(playedTime: Int)
+    fun onPlay(recording: Recording)
+    fun onPause(recording: Recording)
+    fun onStop(recording: Recording)
+    fun onSeekTo(recording: Recording, progress: Int)
 }

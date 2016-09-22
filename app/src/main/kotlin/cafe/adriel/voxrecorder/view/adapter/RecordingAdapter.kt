@@ -7,10 +7,8 @@ import android.view.ViewGroup
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
-import cafe.adriel.voxrecorder.util.Util
-import cafe.adriel.voxrecorder.util.prettyDate
-import cafe.adriel.voxrecorder.util.prettyDuration
-import cafe.adriel.voxrecorder.util.prettySize
+import cafe.adriel.voxrecorder.presenter.RecordingPresenter
+import cafe.adriel.voxrecorder.util.*
 import cafe.adriel.voxrecorder.view.IRecordingView
 import cafe.adriel.voxrecorder.view.ui.widget.RecyclerItemMenu
 import co.mobiwise.library.ProgressLayoutListener
@@ -19,9 +17,11 @@ import kotlinx.android.synthetic.main.list_item_recording.view.*
 import org.zakariya.flyoutmenu.FlyoutMenuView
 import java.util.*
 
-class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<RecordingAdapter.ViewHolder>() {
+class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: RecyclerView.LayoutManager):
+        RecyclerView.Adapter<RecordingAdapter.ViewHolder>(), IRecordingView {
 
-    val recordings = ArrayList<Recording>()
+    val recordingPresenter = RecordingPresenter(this)
+    private val recordings = ArrayList<Recording>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
@@ -32,15 +32,25 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
         holder?.bind(recordings[position])
     }
 
+    override fun onViewAttachedToWindow(holder: ViewHolder?) {
+        super.onViewAttachedToWindow(holder)
+        holder?.itemView?.fadeIn()
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder?) {
+        super.onViewDetachedFromWindow(holder)
+        holder?.itemView?.fadeOut()
+    }
+
     override fun getItemCount(): Int {
         return recordings.size
     }
 
     fun updateRecordings(newRecordings: List<Recording>) {
-        recordings.apply {
+        recordings.run {
             clear()
             addAll(newRecordings)
-            notifyItemRangeChanged(0, size - 1)
+            notifyDataSetChanged()
         }
     }
 
@@ -52,7 +62,54 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
 
     }
 
-    inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v), IRecordingView {
+    override fun onPlay(recording: Recording) {
+        updateRecordingView(recording, {
+            it.vPlayedDuration.text = "00:00:00"
+            it.vPlayedDuration.visibility = View.VISIBLE
+            it.vControl.text = Util.getPauseIcon()
+            it.vProgress.isEnabled = true
+            it.vProgress.start()
+        })
+    }
+
+    override fun onPause(recording: Recording) {
+        updateRecordingView(recording, {
+            it.vPlayedDuration.text = "00:00:00"
+            it.vPlayedDuration.visibility = View.INVISIBLE
+            it.vControl.text = Util.getPlayIcon()
+            it.vProgress.isEnabled = false
+            it.vProgress.stop()
+        })
+    }
+
+    override fun onStop(recording: Recording) {
+        updateRecordingView(recording, {
+            it.vPlayedDuration.visibility = View.INVISIBLE
+            it.vPlayedDuration.text = "00:00:00"
+            it.vControl.text = Util.getPlayIcon()
+            it.vProgress.isEnabled = false
+            it.vProgress.cancel()
+        })
+    }
+
+    override fun onSeekTo(recording: Recording, progress: Int) {
+        updateRecordingView(recording, {
+            if (it.vProgress.isPlaying) {
+                it.vProgress.setCurrentProgress(progress)
+            }
+        })
+    }
+
+    private fun updateRecordingView(recording: Recording, callback: (View) -> Unit) {
+        val index = getRecordingIndex(recording)
+        val holder = layoutManager?.findViewByPosition(index)?.tag as ViewHolder
+        holder.itemView.run { callback(this) }
+    }
+
+    private fun getRecordingIndex(recording: Recording) =
+            recordings.indexOfFirst{ it.equals(recording) }
+
+    inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v) {
         fun bind(recording: Recording){
             v.tag = this
             v.vTitle.text = recording.name
@@ -71,11 +128,11 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
                 add(RecyclerItemMenu.MenuItem(1, GoogleMaterial.Icon.gmd_edit))
                 add(RecyclerItemMenu.MenuItem(2, GoogleMaterial.Icon.gmd_delete))
             }
-            v.vMenu.let {
-                it.layout = FlyoutMenuView.GridLayout(3, FlyoutMenuView.GridLayout.UNSPECIFIED)
-                it.adapter = FlyoutMenuView.ArrayAdapter(menuItems)
-                it.buttonRenderer = RecyclerItemMenu.ButtonRenderer()
-                it.selectionListener = object: FlyoutMenuView.SelectionListener {
+            v.vMenu.run {
+                layout = FlyoutMenuView.GridLayout(3, FlyoutMenuView.GridLayout.UNSPECIFIED)
+                adapter = FlyoutMenuView.ArrayAdapter(menuItems)
+                buttonRenderer = RecyclerItemMenu.ButtonRenderer()
+                selectionListener = object: FlyoutMenuView.SelectionListener {
                     override fun onItemSelected(flyoutMenuView: FlyoutMenuView?, item: FlyoutMenuView.MenuItem?) {
                         onMenuItemSelected(recording, item?.id ?: -1)
                     }
@@ -91,13 +148,13 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
                 it.text = Util.getPlayIcon()
                 it.setOnClickListener {
                     if(v.vProgress.isPlaying){
-                        presenter.pause(recording)
+                        recordingPresenter.pause()
                     } else {
-                        presenter.play(recording)
+                        recordingPresenter.play(recording)
                     }
                 }
                 it.setOnLongClickListener {
-                    presenter.stop(recording)
+                    recordingPresenter.stop()
                     true
                 }
             }
@@ -107,58 +164,31 @@ class RecordingAdapter(val presenter: IMainPresenter): RecyclerView.Adapter<Reco
             v.vProgress.let {
                 it.setMaxProgress(recording.duration)
                 it.setOnTouchListener { v, motionEvent ->
-                    val playTime = (motionEvent.x * recording.duration) / v.width
-                    presenter.setPlayTime(recording, playTime.toInt())
+                    val progress = (motionEvent.x * recording.duration) / v.width
+                    recordingPresenter.seekTo(progress.toInt())
                     true
                 }
                 it.setProgressLayoutListener(object: ProgressLayoutListener {
                     override fun onProgressChanged(seconds: Int) {
-                        presenter.updatePlayedTime(recording, seconds)
+                        updatePlayedTime(seconds)
                     }
                     override fun onProgressCompleted() {
-                        presenter.stop(recording)
+
                     }
                 })
             }
         }
 
-        override fun onMenuItemSelected(recording: Recording, menuId: Int) {
+        private fun onMenuItemSelected(recording: Recording, menuId: Int) {
             when(menuId){
-                0 -> presenter.share(recording)
-                1 -> presenter.edit(recording)
-                2 -> presenter.delete(recording)
+                0 -> mainPresenter.share(recording)
+                1 -> mainPresenter.edit(recording)
+                2 -> mainPresenter.delete(recording)
             }
         }
 
-        override fun onPlay() {
-            v.vPlayedDuration.text = "00:00:00"
-            v.vPlayedDuration.visibility = View.VISIBLE
-            v.vControl.text = Util.getPauseIcon()
-            v.vProgress.start()
-        }
-
-        override fun onPause() {
-            v.vPlayedDuration.text = "00:00:00"
-            v.vPlayedDuration.visibility = View.INVISIBLE
-            v.vControl.text = Util.getPlayIcon()
-            v.vProgress.stop()
-        }
-
-        override fun onStop() {
-            v.vPlayedDuration.visibility = View.INVISIBLE
-            v.vPlayedDuration.text = "00:00:00"
-            v.vControl.text = Util.getPlayIcon()
-            v.vProgress.cancel()
-        }
-
-        override fun onSetPlayTime(playTime: Int) {
-            if(v.vProgress.isPlaying) {
-                v.vProgress.setCurrentProgress(playTime)
-            }
-        }
-
-        override fun onUpdatePlayedTime(playedTime: Int) {
-            v.vPlayedDuration.text = playedTime.prettyDuration()
+        private fun updatePlayedTime(progress: Int) {
+            v.vPlayedDuration.text = progress.prettyDuration()
         }
     }
 

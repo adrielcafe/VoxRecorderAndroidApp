@@ -23,7 +23,7 @@ class MainActivity: BaseActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(vToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        vFab.apply {
+        vFab.run {
             backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
             imageTintList = ColorStateList.valueOf(
                     if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
@@ -43,9 +43,7 @@ class MainActivity: BaseActivity() {
 //                            .show()
                 })
                 .whenPermissionsGranted({
-                    if(fMain != null) {
-                        (fMain as MainFragment).init()
-                    }
+
                 })
                 .whenPermissionsRefused({
 
@@ -55,7 +53,7 @@ class MainActivity: BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
-        menu?.apply {
+        menu?.run {
             findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
             findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
             findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)

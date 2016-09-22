@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.format.Formatter
 import android.view.MenuItem
+import android.view.View
+import android.view.animation.AnimationUtils
 import cafe.adriel.voxrecorder.App
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
@@ -32,7 +34,7 @@ fun MenuItem.setFontIcon(icon: GoogleMaterial.Icon) {
 fun File.getAudioDuration(): Int {
     try {
         var duration = ""
-        MediaMetadataRetriever().apply {
+        MediaMetadataRetriever().run {
             setDataSource(path)
             duration = extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             release()
@@ -45,9 +47,7 @@ fun File.getAudioDuration(): Int {
 }
 
 fun Date.prettyDate() = Util.prettyTime.format(this)
-
 fun Long.prettySize() = Formatter.formatShortFileSize(App.instance, this)
-
 fun Int.prettyDuration(): String {
     val sec = TimeUnit.SECONDS
     val duration = toLong()
@@ -55,9 +55,9 @@ fun Int.prettyDuration(): String {
 }
 
 fun Any.pref() = App.instance.defaultSharedPreferences
-
 fun Any.drawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(App.instance, resId)
-
 fun Any.string(@StringRes resId: Int) = App.instance.getString(resId)
-
 fun Any.color(@ColorRes resId: Int) = App.instance.resources.getColor(resId)
+
+fun View.fadeIn() = startAnimation(AnimationUtils.loadAnimation(App.instance, android.R.anim.fade_in))
+fun View.fadeOut() = startAnimation(AnimationUtils.loadAnimation(App.instance, android.R.anim.fade_out))

@@ -1,25 +1,23 @@
-package cafe.adriel.voxrecorder.view.ui
+package cafe.adriel. voxrecorder.view.ui
 
 import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ShareCompat
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.ISettingsView
-import com.thebluealliance.spectrum.SpectrumPreferenceCompat
 
 class SettingsFragment: PreferenceFragmentCompat(), ISettingsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(Util.isCpu86()) {
-            findPreference(Constant.PREF_RECORDING_FORMAT).apply {
+            findPreference(Constant.PREF_RECORDING_FORMAT).run {
                 isEnabled = false
                 setSummary(R.string.audio_file_format_unsupported)
             }
@@ -40,12 +38,6 @@ class SettingsFragment: PreferenceFragmentCompat(), ISettingsView {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
-    }
-
-    override fun onDisplayPreferenceDialog(preference: Preference?) {
-        if (!SpectrumPreferenceCompat.onDisplayPreferenceDialog(preference, this)) {
-            super.onDisplayPreferenceDialog(preference)
-        }
     }
 
     override fun sendFeedback(){

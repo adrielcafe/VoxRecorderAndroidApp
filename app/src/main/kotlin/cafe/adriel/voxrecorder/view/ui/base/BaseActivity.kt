@@ -17,7 +17,7 @@ import com.tsengvn.typekit.TypekitContextWrapper
 
 abstract class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    var shouldRecreateOnFocus by state(false)
+    private var shouldRecreateOnFocus by state(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory(layoutInflater, IconicsLayoutInflater(delegate))
