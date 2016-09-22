@@ -65,6 +65,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxkotlin:0.60.0'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.eightbitlab:rxbus:1.0.2'
+    compile 'com.github.phajduk:rxfileobserver:0.1.0'
 
     // Core
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'

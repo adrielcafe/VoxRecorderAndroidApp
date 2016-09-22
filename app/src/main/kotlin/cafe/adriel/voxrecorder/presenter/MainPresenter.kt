@@ -9,9 +9,8 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     private val recordingRepo = RecordingRepository()
 
     override fun load() {
-        recordingRepo.get({ recordings ->
-            view.updateRecordings(recordings)
-        })
+        recordingRepo.initFileObserver()
+        recordingRepo.get({ view.updateRecordings(it) })
     }
 
     override fun share(recording: Recording) {

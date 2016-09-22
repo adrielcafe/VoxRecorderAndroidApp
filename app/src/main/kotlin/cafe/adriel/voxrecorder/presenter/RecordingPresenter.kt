@@ -25,19 +25,23 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     }
 
     override fun play(recording: Recording) {
-        currentRecording?.let {
+        if(!recording.equals(currentRecording)) {
             stop()
         }
         currentRecording = recording
         currentRecording?.let {
             try {
-                player = MediaPlayer().apply {
-                    setOnSeekCompleteListener {
-                        this@RecordingPresenter.stop()
+                if(isPaused){
+                    player?.start()
+                } else {
+                    player = MediaPlayer().apply {
+                        setOnSeekCompleteListener {
+                            this@RecordingPresenter.stop()
+                        }
+                        setDataSource(it.filePath)
+                        prepare()
+                        start()
                     }
-                    setDataSource(it.filePath)
-                    prepare()
-                    start()
                 }
                 isPaused = false
                 view.onPlay(it)
@@ -77,7 +81,7 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     override fun seekTo(progress: Int) {
         currentRecording?.let {
             try {
-                e { "${player?.isPlaying}" }
+                e { "${player?.currentPosition} $progress" }
                 if (player?.isPlaying as Boolean) {
                     player?.seekTo(progress)
                     view.onSeekTo(it, progress)
