@@ -1,12 +1,14 @@
 package cafe.adriel.voxrecorder.view.ui
 
 import android.Manifest
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
+import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
@@ -23,12 +25,7 @@ class MainActivity: BaseActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(vToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        vFab.run {
-            backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
-            imageTintList = ColorStateList.valueOf(
-                    if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
-            setOnClickListener { newRecording() }
-        }
+        setupFab()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -49,6 +46,15 @@ class MainActivity: BaseActivity() {
 
                 })
                 .execute(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        super.onSharedPreferenceChanged(sharedPreferences, key)
+        when(key) {
+            Constant.PREF_THEME_RECORDER_COLOR -> {
+                setupFab()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,6 +83,15 @@ class MainActivity: BaseActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun setupFab(){
+        vFab.run {
+            backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
+            imageTintList = ColorStateList.valueOf(
+                    if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
+            setOnClickListener { newRecording() }
+        }
     }
 
     // TODO

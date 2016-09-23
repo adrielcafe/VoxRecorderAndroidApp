@@ -7,5 +7,5 @@ interface IMainPresenter {
     fun share(recording: Recording)
     fun edit(recording: Recording)
     fun delete(recording: Recording)
-    fun onDestroy()
+    fun unsubscribe()
 }

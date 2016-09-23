@@ -9,13 +9,15 @@ import java.util.*
 class MainPresenter(val view: IMainView): IMainPresenter {
 
     private val recordingRepo = RecordingRepository()
-    private val subscriptions = ArrayList<Subscription>()
+
+    private var subscription: Subscription? = null
 
     override fun load() {
+        unsubscribe()
         recordingRepo.initFileObserver()
-        subscriptions.add(recordingRepo.get().subscribe { recordings ->
+        subscription = recordingRepo.get().subscribe ({ recordings ->
             view.updateRecordings(recordings)
-        })
+        }, Throwable::printStackTrace)
     }
 
     override fun share(recording: Recording) {
@@ -30,11 +32,10 @@ class MainPresenter(val view: IMainView): IMainPresenter {
         view.onRecordingDeleted(recording)
     }
 
-    override fun onDestroy() {
-        subscriptions.forEach {
-            if(!it.isUnsubscribed) {
-                it.unsubscribe()
-            }
+    override fun unsubscribe() {
+        recordingRepo.unsubscribe()
+        if(subscription?.isUnsubscribed == false) {
+            subscription?.unsubscribe()
         }
     }
 

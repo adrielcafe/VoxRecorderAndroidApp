@@ -50,11 +50,6 @@ abstract class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPref
                     shouldRecreateOnFocus = true
                 }
             }
-            Constant.PREF_THEME_RECORDER_COLOR -> {
-                if(this !is SettingsActivity){
-                    shouldRecreateOnFocus = true
-                }
-            }
         }
     }
 

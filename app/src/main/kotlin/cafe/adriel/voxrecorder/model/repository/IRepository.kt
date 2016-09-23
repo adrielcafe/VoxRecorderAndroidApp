@@ -10,4 +10,5 @@ interface IRepository<T> {
     fun update(item: T)
     fun remove(item: T)
     fun get(): Observable<ArrayList<Recording>>
+    fun unsubscribe()
 }

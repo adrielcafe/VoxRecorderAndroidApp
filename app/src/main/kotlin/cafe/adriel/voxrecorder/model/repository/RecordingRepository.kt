@@ -8,6 +8,7 @@ import com.eightbitlab.rxbus.Bus
 import com.github.phajduk.rxfileobserver.FileEvent
 import com.github.phajduk.rxfileobserver.RxFileObserver
 import rx.Observable
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.*
@@ -15,11 +16,13 @@ import java.util.*
 class RecordingRepository: IRepository<Recording> {
 
     private var fileObserver: Observable<FileEvent>? = null
+    private var subscription: Subscription? = null
 
     override fun initFileObserver() {
         if(fileObserver == null){
+            unsubscribe()
             fileObserver = RxFileObserver.create(Constant.RECORDING_FOLDER)
-            fileObserver!!
+            subscription = fileObserver!!
                 .observeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .retry()
@@ -28,7 +31,7 @@ class RecordingRepository: IRepository<Recording> {
                     if(canHandleEvent(evt) && Util.isSupportedFormat(evt.path)){
                         Bus.send(RecordingChangedEvent(evt))
                     }
-                })
+                }, Throwable::printStackTrace)
         }
     }
 
@@ -59,6 +62,12 @@ class RecordingRepository: IRepository<Recording> {
             }.map { recordings ->
                 ArrayList(recordings)
             }
+        }
+    }
+
+    override fun unsubscribe() {
+        if(subscription?.isUnsubscribed == false) {
+            subscription?.unsubscribe()
         }
     }
 

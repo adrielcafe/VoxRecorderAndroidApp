@@ -47,7 +47,7 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
+        presenter.unsubscribe()
         adapter.recordingPresenter.onDestroy()
     }
 
