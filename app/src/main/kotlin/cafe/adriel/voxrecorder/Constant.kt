@@ -11,7 +11,7 @@ object Constant {
     val MARKET_URI = Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
 
     val RECORDING_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdir() }
-    val SUPPORTED_EXTENSIONS = arrayOf("aac", "mp3", "m4a", "wma", "wav", "flac")
+    val SUPPORTED_FORMATS = arrayOf("aac", "mp3", "m4a", "wma", "wav", "flac")
 
     val PREF_THEME = "theme"
     val PREF_THEME_DARK_MODE = "theme_dark_mode"

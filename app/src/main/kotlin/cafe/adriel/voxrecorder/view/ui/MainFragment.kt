@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.model.entity.FileChangedEvent
 import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.model.entity.RecordingChangedEvent
 import cafe.adriel.voxrecorder.presenter.MainPresenter
 import cafe.adriel.voxrecorder.view.IMainView
 import cafe.adriel.voxrecorder.view.adapter.RecordingAdapter
@@ -36,7 +36,7 @@ class MainFragment: BaseFragment(), IMainView {
             it.layoutManager = layoutManager
         }
 
-        Bus.observe<FileChangedEvent>()
+        Bus.observe<RecordingChangedEvent>()
                 .subscribe { onFileChanged(it.fileEvent) }
                 .registerInBus(this)
 
@@ -47,6 +47,7 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter.onDestroy()
         adapter.recordingPresenter.onDestroy()
     }
 

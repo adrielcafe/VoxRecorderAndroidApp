@@ -7,11 +7,8 @@ import cafe.adriel.voxrecorder.R
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
-import org.ocpsoft.prettytime.PrettyTime
 
 object Util {
-
-    val prettyTime = PrettyTime()
 
     fun isDarkTheme() = pref().getBoolean(Constant.PREF_THEME_DARK_MODE, false)
 
@@ -20,6 +17,8 @@ object Util {
     fun getRecorderColor() = pref().getInt(Constant.PREF_THEME_RECORDER_COLOR, color(R.color.peter_river))
 
     fun isRecorderColorBright() = cafe.adriel.androidaudiorecorder.Util.isBrightColor(getRecorderColor())
+
+    fun isSupportedFormat(filePath: String) = Constant.SUPPORTED_FORMATS.any { filePath.endsWith(it, true) }
 
     fun isCpu86(): Boolean {
         var abi86 = false

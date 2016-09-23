@@ -69,12 +69,7 @@ dependencies {
     compile 'com.github.phajduk:rxfileobserver:0.1.0'
 
     // Core
-    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compile 'com.github.jksiezni.permissive:permissive:0.1@aar'
 //    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
-}
-
-repositories {
-    mavenCentral()
 }

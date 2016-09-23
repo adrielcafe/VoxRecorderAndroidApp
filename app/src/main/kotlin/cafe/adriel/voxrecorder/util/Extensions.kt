@@ -16,6 +16,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.pawegio.kandroid.defaultSharedPreferences
 import java.io.File
+import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -46,7 +47,7 @@ fun File.getAudioDuration(): Int {
     }
 }
 
-fun Date.prettyDate() = Util.prettyTime.format(this)
+fun Date.prettyDate() = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault()).format(this)
 fun Long.prettySize() = Formatter.formatShortFileSize(App.instance, this)
 fun Int.prettyDuration(): String {
     val sec = TimeUnit.SECONDS

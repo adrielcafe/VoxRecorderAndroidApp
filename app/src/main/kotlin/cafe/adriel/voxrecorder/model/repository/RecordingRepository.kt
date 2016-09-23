@@ -1,14 +1,16 @@
 package cafe.adriel.voxrecorder.model.repository
 
 import cafe.adriel.voxrecorder.Constant
-import cafe.adriel.voxrecorder.model.entity.FileChangedEvent
 import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.model.entity.RecordingChangedEvent
+import cafe.adriel.voxrecorder.util.Util
 import com.eightbitlab.rxbus.Bus
 import com.github.phajduk.rxfileobserver.FileEvent
 import com.github.phajduk.rxfileobserver.RxFileObserver
-import com.pawegio.kandroid.runAsync
-import com.pawegio.kandroid.runOnUiThread
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
+import java.util.*
 
 class RecordingRepository: IRepository<Recording> {
 
@@ -17,11 +19,16 @@ class RecordingRepository: IRepository<Recording> {
     override fun initFileObserver() {
         if(fileObserver == null){
             fileObserver = RxFileObserver.create(Constant.RECORDING_FOLDER)
-            fileObserver?.subscribe({
-                if(it.isCreate || it.isModify || it.isDelete || it.isMovedFrom || it.isMovedTo) {
-                    Bus.send(FileChangedEvent(it))
-                }
-            })
+            fileObserver!!
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .retry()
+                .distinctUntilChanged()
+                .subscribe({ evt ->
+                    if(canHandleEvent(evt) && Util.isSupportedFormat(evt.path)){
+                        Bus.send(RecordingChangedEvent(evt))
+                    }
+                })
         }
     }
 
@@ -37,19 +44,25 @@ class RecordingRepository: IRepository<Recording> {
 
     }
 
-    override fun get(callback: (List<Recording>) -> Unit) {
-        runAsync {
-            val recordings = Constant.RECORDING_FOLDER.listFiles { file, s ->
-                Constant.SUPPORTED_EXTENSIONS.any { s.endsWith(it, true) }
-            }.map {
-                Recording(it.path)
-            }.sortedByDescending {
-                it.date
+    override fun get(): Observable<ArrayList<Recording>> {
+        return Observable.defer {
+            val files = Constant.RECORDING_FOLDER.listFiles(){ file, name ->
+                Util.isSupportedFormat(name)
             }
-            runOnUiThread {
-                callback(recordings)
+            Observable.from(files)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { file ->
+                Recording(file.path)
+            }.toSortedList { r1, r2 ->
+                r2.date.compareTo(r1.date)
+            }.map { recordings ->
+                ArrayList(recordings)
             }
         }
     }
+
+    private fun canHandleEvent(evt: FileEvent) =
+            evt.isCreate || evt.isModify || evt.isDelete || evt.isMovedFrom || evt.isMovedTo
 
 }
