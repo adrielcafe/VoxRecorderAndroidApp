@@ -1,5 +1,5 @@
 package cafe.adriel.voxrecorder.model.entity
 
-import com.github.phajduk.rxfileobserver.FileEvent
-
-class RecordingChangedEvent(val fileEvent: FileEvent)
+class RecordingAddedEvent(val recording: Recording)
+class RecordingUpdatedEvent(val recording: Recording)
+class RecordingDeletedEvent(val recording: Recording)

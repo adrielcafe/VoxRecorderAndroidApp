@@ -1,6 +1,8 @@
 package cafe.adriel.voxrecorder.view.ui
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -10,15 +12,19 @@ import android.view.MenuItem
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
+import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.model.entity.RecordingAddedEvent
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
 import cafe.adriel.voxrecorder.view.ui.base.BaseActivity
+import com.eightbitlab.rxbus.Bus
 import com.github.jksiezni.permissive.Permissive
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.IntentFor
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: BaseActivity() {
+    private val REQUEST_NEW_RECORDING = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +91,15 @@ class MainActivity: BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == REQUEST_NEW_RECORDING){
+                Bus.send(RecordingAddedEvent(Recording(Constant.TEMP_RECORDING_FILE)))
+            }
+        }
+    }
+
     fun setupFab(){
         vFab.run {
             backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
@@ -98,6 +113,8 @@ class MainActivity: BaseActivity() {
     fun newRecording(){
         AndroidAudioRecorder.with(this)
                 .setColor(Util.getRecorderColor())
+                .setFilePath(Constant.TEMP_RECORDING_FILE)
+                .setRequestCode(REQUEST_NEW_RECORDING)
                 .record()
     }
 

@@ -6,7 +6,6 @@ import android.os.StrictMode
 import android.support.v7.preference.PreferenceManager
 import cafe.adriel.voxrecorder.util.Util
 import com.pawegio.kandroid.defaultSharedPreferences
-import com.pawegio.kandroid.runAsync
 import com.tsengvn.typekit.Typekit
 
 class App: Application() {
@@ -31,15 +30,13 @@ class App: Application() {
     }
 
     private fun initPref(){
-        runAsync {
-            PreferenceManager.setDefaultValues(this, R.xml.settings, false)
-            // AndroidAudioRecorder only supports WAV format and
-            // AndroidAudioConverter doesn't supports x86 ABI
-            if (Util.isCpu86()) {
-                defaultSharedPreferences.edit()
-                        .putString(Constant.PREF_RECORDING_FORMAT, "wav")
-                        .apply()
-            }
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+        // AndroidAudioRecorder only supports WAV format and
+        // AndroidAudioConverter doesn't supports x86 ABI
+        if (Util.isCpu86()) {
+            defaultSharedPreferences.edit()
+                    .putString(Constant.PREF_RECORDING_FORMAT, "wav")
+                    .apply()
         }
     }
 

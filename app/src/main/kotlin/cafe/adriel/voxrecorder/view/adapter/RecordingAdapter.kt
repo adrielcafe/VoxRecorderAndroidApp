@@ -8,7 +8,10 @@ import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
 import cafe.adriel.voxrecorder.presenter.RecordingPresenter
-import cafe.adriel.voxrecorder.util.*
+import cafe.adriel.voxrecorder.util.Util
+import cafe.adriel.voxrecorder.util.prettyDate
+import cafe.adriel.voxrecorder.util.prettyDuration
+import cafe.adriel.voxrecorder.util.prettySize
 import cafe.adriel.voxrecorder.view.IRecordingView
 import cafe.adriel.voxrecorder.view.ui.widget.RecyclerItemMenu
 import co.mobiwise.library.ProgressLayoutListener
@@ -21,7 +24,7 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         RecyclerView.Adapter<RecordingAdapter.ViewHolder>(), IRecordingView {
 
     val recordingPresenter = RecordingPresenter(this)
-    private val recordings = ArrayList<Recording>()
+    val recordings = LinkedList<Recording>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
@@ -32,34 +35,8 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         holder?.bind(recordings[position])
     }
 
-    override fun onViewAttachedToWindow(holder: ViewHolder?) {
-        super.onViewAttachedToWindow(holder)
-        holder?.itemView?.fadeIn()
-    }
-
-    override fun onViewDetachedFromWindow(holder: ViewHolder?) {
-        super.onViewDetachedFromWindow(holder)
-        holder?.itemView?.fadeOut()
-    }
-
     override fun getItemCount(): Int {
         return recordings.size
-    }
-
-    fun updateRecordings(newRecordings: List<Recording>) {
-        recordings.run {
-            clear()
-            addAll(newRecordings)
-            notifyDataSetChanged()
-        }
-    }
-
-    fun onRecordingEdited(recording: Recording) {
-
-    }
-
-    fun onRecordingDeleted(recording: Recording) {
-
     }
 
     override fun onPlay(recording: Recording) {
@@ -100,6 +77,31 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         })
     }
 
+    fun addRecording(recording: Recording) {
+        if(!recordings.contains(recording)) {
+            recordings.run {
+                add(recording)
+                sortWith(Comparator { r1: Recording, r2: Recording ->
+                    r2.date.compareTo(r1.date).apply {
+                        if(this == 0){
+                            r1.name.compareTo(r2.name)
+                        } else {
+                            this
+                        }
+                    }
+                })
+                notifyItemInserted(indexOf(recording))
+            }
+        }
+    }
+
+    fun removeRecording(recording: Recording) {
+        val index = recordings.indexOf(recording)
+        if(recordings.remove(recording)){
+            notifyItemRemoved(index)
+        }
+    }
+
     private fun updateRecordingView(recording: Recording, callback: (View) -> Unit) {
         val index = getRecordingIndex(recording)
         val holder = layoutManager?.findViewByPosition(index)?.tag as ViewHolder
@@ -135,9 +137,10 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
                 selectionListener = object: FlyoutMenuView.SelectionListener {
                     override fun onItemSelected(flyoutMenuView: FlyoutMenuView?, item: FlyoutMenuView.MenuItem?) {
                         onMenuItemSelected(recording, item?.id ?: -1)
+                        flyoutMenuView?.dismiss()
                     }
                     override fun onDismissWithoutSelection(flyoutMenuView: FlyoutMenuView?) {
-
+                        flyoutMenuView?.dismiss()
                     }
                 }
             }

@@ -3,21 +3,17 @@ package cafe.adriel.voxrecorder.presenter
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.repository.RecordingRepository
 import cafe.adriel.voxrecorder.view.IMainView
-import rx.Subscription
-import java.util.*
+import rx.subscriptions.CompositeSubscription
 
 class MainPresenter(val view: IMainView): IMainPresenter {
 
     private val recordingRepo = RecordingRepository()
-
-    private var subscription: Subscription? = null
+    private val subscriptions = CompositeSubscription()
 
     override fun load() {
         unsubscribe()
-        recordingRepo.initFileObserver()
-        subscription = recordingRepo.get().subscribe ({ recordings ->
-            view.updateRecordings(recordings)
-        }, Throwable::printStackTrace)
+        subscriptions.add(recordingRepo.get()
+                .subscribe ({ view.onRecordingAdded(it) }, Throwable::printStackTrace))
     }
 
     override fun share(recording: Recording) {
@@ -25,7 +21,7 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun edit(recording: Recording) {
-        view.onRecordingEdited(recording)
+        view.onRecordingUpdated(recording)
     }
 
     override fun delete(recording: Recording) {
@@ -33,10 +29,8 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun unsubscribe() {
-        recordingRepo.unsubscribe()
-        if(subscription?.isUnsubscribed == false) {
-            subscription?.unsubscribe()
-        }
+        subscriptions.unsubscribe()
+        subscriptions.clear()
     }
 
 }

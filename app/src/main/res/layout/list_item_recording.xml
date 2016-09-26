@@ -43,7 +43,7 @@
                 android:id="@+id/vTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
             <LinearLayout

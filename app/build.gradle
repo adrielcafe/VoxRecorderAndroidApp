@@ -54,7 +54,7 @@ dependencies {
     compile 'com.tsengvn:typekit:1.0.1@aar'
     compile 'org.zakariya.flyoutmenus:flyoutmenu:0.5.3@aar'
     compile 'com.github.iammert:ProgressLayout:a481ddc'
-    compile 'com.github.adrielcafe:ColorPicker:08c79cb'
+    compile 'com.github.adrielcafe:ColorPicker:a06614f'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
 
     // Audio
@@ -66,7 +66,6 @@ dependencies {
     compile 'io.reactivex:rxkotlin:0.60.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.eightbitlab:rxbus:1.0.2'
-    compile 'com.github.phajduk:rxfileobserver:0.1.0'
 
     // Core
     compile 'com.github.jksiezni.permissive:permissive:0.1@aar'
