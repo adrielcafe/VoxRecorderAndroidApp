@@ -32,7 +32,7 @@ class MainFragment: BaseFragment(), IMainView {
         val view = inflater!!.inflate(R.layout.fragment_main, container, false)
         view.vRecordings.let {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = RecordingAdapter(presenter, layoutManager!!)
+            adapter = RecordingAdapter(activity, presenter, layoutManager!!)
             it.addItemDecoration(RecyclerItemDecoration())
             it.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -70,6 +70,14 @@ class MainFragment: BaseFragment(), IMainView {
         super.onDestroy()
         presenter.unsubscribe()
         adapter.recordingPresenter.onDestroy()
+    }
+
+    override fun showRenameDialog(recording: Recording) {
+
+    }
+
+    override fun showDeleteDialog(recording: Recording) {
+
     }
 
     override fun onRecordingAdded(recording: Recording) {

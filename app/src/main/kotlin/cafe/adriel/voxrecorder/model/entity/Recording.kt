@@ -10,6 +10,7 @@ data class Recording(val filePath: String): Parcelable {
     val file = File(filePath)
     val name = file.nameWithoutExtension
     val format = file.extension
+    val nameWithFormat = "$name.$format"
     val size = file.length()
     val duration = file.getAudioDuration().toInt() / 1000
     val playable = duration > 0

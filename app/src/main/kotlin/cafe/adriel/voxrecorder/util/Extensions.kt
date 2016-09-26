@@ -12,20 +12,20 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import cafe.adriel.voxrecorder.App
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
 import com.pawegio.kandroid.defaultSharedPreferences
+import com.pawegio.kandroid.e
 import java.io.File
 import java.text.DateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 fun AppCompatActivity.recreateWithThemeMode() {
     delegate.setLocalNightMode(Util.getThemeMode())
     recreate()
 }
 
-fun MenuItem.setFontIcon(icon: GoogleMaterial.Icon) {
+fun MenuItem.setFontIcon(icon: IIcon) {
     setIcon(IconicsDrawable(App.instance)
             .icon(icon)
             .color(Color.WHITE)
@@ -40,6 +40,7 @@ fun File.getAudioDuration(): Int {
             duration = extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             release()
         }
+        e { duration }
         return duration.toInt()
     } catch (e: Exception){
         e.printStackTrace()
@@ -50,9 +51,10 @@ fun File.getAudioDuration(): Int {
 fun Date.prettyDate() = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault()).format(this)
 fun Long.prettySize() = Formatter.formatShortFileSize(App.instance, this)
 fun Int.prettyDuration(): String {
-    val sec = TimeUnit.SECONDS
-    val duration = toLong()
-    return "%02d:%02d:%02d".format(sec.toHours(duration), sec.toMinutes(duration), sec.toSeconds(duration))
+    val h = this / 3600
+    val m = (this - h * 3600) / 60
+    val s = this - (h * 3600 + m * 60)
+    return "%02d:%02d:%02d".format(h, m, s)
 }
 
 fun Any.pref() = App.instance.defaultSharedPreferences

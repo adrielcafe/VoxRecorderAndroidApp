@@ -1,5 +1,6 @@
 package cafe.adriel.voxrecorder.view.adapter
 
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
 import cafe.adriel.voxrecorder.presenter.RecordingPresenter
-import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.prettyDate
 import cafe.adriel.voxrecorder.util.prettyDuration
 import cafe.adriel.voxrecorder.util.prettySize
@@ -20,11 +20,14 @@ import kotlinx.android.synthetic.main.list_item_recording.view.*
 import org.zakariya.flyoutmenu.FlyoutMenuView
 import java.util.*
 
-class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: RecyclerView.LayoutManager):
+class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter, val layoutManager: RecyclerView.LayoutManager):
         RecyclerView.Adapter<RecordingAdapter.ViewHolder>(), IRecordingView {
 
     val recordingPresenter = RecordingPresenter(this)
     val recordings = LinkedList<Recording>()
+
+    val iconPlay = GoogleMaterial.Icon.gmd_play_arrow.formattedName!!
+    val iconPause = GoogleMaterial.Icon.gmd_pause.formattedName!!
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
@@ -43,7 +46,7 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         updateRecordingView(recording, {
             it.vPlayedDuration.text = "00:00:00"
             it.vPlayedDuration.visibility = View.VISIBLE
-            it.vControl.text = Util.getPauseIcon()
+            it.vControl.text = iconPause
             it.vProgress.isEnabled = true
             it.vProgress.start()
         })
@@ -53,7 +56,7 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         updateRecordingView(recording, {
             it.vPlayedDuration.text = "00:00:00"
             it.vPlayedDuration.visibility = View.INVISIBLE
-            it.vControl.text = Util.getPlayIcon()
+            it.vControl.text = iconPlay
             it.vProgress.isEnabled = false
             it.vProgress.stop()
         })
@@ -63,7 +66,7 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
         updateRecordingView(recording, {
             it.vPlayedDuration.visibility = View.INVISIBLE
             it.vPlayedDuration.text = "00:00:00"
-            it.vControl.text = Util.getPlayIcon()
+            it.vControl.text = iconPlay
             it.vProgress.isEnabled = false
             it.vProgress.cancel()
         })
@@ -148,7 +151,7 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
 
         private fun bindControl(recording: Recording){
             v.vControl.let {
-                it.text = Util.getPlayIcon()
+                it.text = iconPlay
                 it.setOnClickListener {
                     if(v.vProgress.isPlaying){
                         recordingPresenter.pause()
@@ -184,9 +187,9 @@ class RecordingAdapter(val mainPresenter: IMainPresenter, val layoutManager: Rec
 
         private fun onMenuItemSelected(recording: Recording, menuId: Int) {
             when(menuId){
-                0 -> mainPresenter.share(recording)
-                1 -> mainPresenter.edit(recording)
-                2 -> mainPresenter.delete(recording)
+                0 -> mainPresenter.share(activity, recording)
+                1 -> mainPresenter.showRenameDialog(recording)
+                2 -> mainPresenter.showDeleteDialog(recording)
             }
         }
 

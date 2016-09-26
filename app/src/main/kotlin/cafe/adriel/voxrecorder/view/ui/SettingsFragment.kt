@@ -1,6 +1,5 @@
 package cafe.adriel. voxrecorder.view.ui
 
-import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -55,8 +54,8 @@ class SettingsFragment: PreferenceFragmentCompat(), ISettingsView {
     override fun shareApp(){
         val text = "${string(R.string.you_should_give_try_vox)} \n ${Constant.GOOGLE_PLAY_URL}"
         ShareCompat.IntentBuilder.from(activity)
-                .setType(ClipDescription.MIMETYPE_TEXT_PLAIN)
                 .setText(text)
+                .setType(Constant.MIME_TYPE_TEXT)
                 .startChooser()
     }
 

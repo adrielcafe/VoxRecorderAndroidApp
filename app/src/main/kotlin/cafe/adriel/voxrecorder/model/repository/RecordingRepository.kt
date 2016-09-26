@@ -2,8 +2,12 @@ package cafe.adriel.voxrecorder.model.repository
 
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.model.entity.RecordingDeletedEvent
+import cafe.adriel.voxrecorder.model.entity.RecordingUpdatedEvent
 import cafe.adriel.voxrecorder.util.Util
+import com.eightbitlab.rxbus.Bus
 import rx.Observable
+import java.io.File
 
 class RecordingRepository: IRepository<Recording> {
 
@@ -14,16 +18,21 @@ class RecordingRepository: IRepository<Recording> {
         .map { Recording(it.path) }
     }
 
-    override fun add(item: Recording) {
+    override fun convert(item: Recording) {
 
     }
 
-    override fun update(item: Recording) {
-
+    override fun rename(item: Recording, newName: String) {
+        val newFile = File(item.file.parentFile, newName)
+        if(item.file.renameTo(newFile)){
+            Bus.send(RecordingUpdatedEvent(item))
+        }
     }
 
-    override fun remove(item: Recording) {
-
+    override fun delete(item: Recording) {
+        if(item.file.delete()){
+            Bus.send(RecordingDeletedEvent(item))
+        }
     }
 
 }

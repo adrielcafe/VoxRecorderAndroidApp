@@ -11,19 +11,6 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     private var currentRecording: Recording? = null
     private var isPaused = false
 
-    override fun onDestroy() {
-        try {
-            player?.apply {
-                reset()
-                release()
-            }
-            player = null
-            currentRecording = null
-        } catch (e: Exception){
-            e.printStackTrace()
-        }
-    }
-
     override fun play(recording: Recording) {
         if(!recording.equals(currentRecording)) {
             stop()
@@ -89,6 +76,19 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
             } catch (e: Exception){
                 e.printStackTrace()
             }
+        }
+    }
+
+    override fun onDestroy() {
+        try {
+            player?.apply {
+                reset()
+                release()
+            }
+            player = null
+            currentRecording = null
+        } catch (e: Exception){
+            e.printStackTrace()
         }
     }
 

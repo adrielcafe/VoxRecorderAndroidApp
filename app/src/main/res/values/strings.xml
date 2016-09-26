@@ -23,6 +23,7 @@
     <string name="rate_app">Rate the app</string>
     <string name="give_five_stars">Give 5 stars to Vox!</string>
     <string name="version">Version</string>
+    <string name="this_recording_was_created_using_vox">This recording was created using Vox Recorder (%1$s)</string>
 
     <string-array name="pref_recording_format_titles">
         <item>WAV</item>

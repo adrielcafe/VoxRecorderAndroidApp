@@ -28,4 +28,7 @@ object Constant {
     val PREF_ABOUT_SHARE = "about_share"
     val PREF_ABOUT_VERSION = "about_version"
 
+    val MIME_TYPE_TEXT = "text/plain"
+    val MIME_TYPE_AUDIO = "audio/*"
+
 }
