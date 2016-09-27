@@ -15,7 +15,6 @@ import cafe.adriel.voxrecorder.App
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.pawegio.kandroid.defaultSharedPreferences
-import com.pawegio.kandroid.e
 import java.io.File
 import java.text.DateFormat
 import java.util.*
@@ -40,7 +39,6 @@ fun File.getAudioDuration(): Int {
             duration = extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
             release()
         }
-        e { duration }
         return duration.toInt()
     } catch (e: Exception){
         e.printStackTrace()

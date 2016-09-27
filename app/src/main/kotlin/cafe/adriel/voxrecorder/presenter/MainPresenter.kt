@@ -13,7 +13,8 @@ import rx.Subscription
 class MainPresenter(val view: IMainView): IMainPresenter {
 
     private val recordingRepo = RecordingRepository()
-    private var subscription : Subscription? = null
+    
+    private var subscription: Subscription? = null
 
     override fun load() {
         unsubscribe()
@@ -22,11 +23,11 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun showRenameDialog(recording: Recording) {
-        view.showDeleteDialog(recording)
+        view.showRenameDialog(recording)
     }
 
     override fun showDeleteDialog(recording: Recording) {
-        view.showRenameDialog(recording)
+        view.showDeleteDialog(recording)
     }
 
     override fun rename(recording: Recording, newName: String) {
@@ -45,6 +46,8 @@ class MainPresenter(val view: IMainView): IMainPresenter {
                 .setType(Constant.MIME_TYPE_AUDIO)
                 .startChooser()
     }
+
+    override fun isValidFileName(fileName: String) = fileName.isNotEmpty()
 
     override fun unsubscribe() {
         if(subscription != null && !subscription!!.isUnsubscribed) {

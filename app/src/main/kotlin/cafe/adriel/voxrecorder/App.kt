@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.StrictMode
 import android.support.v7.preference.PreferenceManager
 import cafe.adriel.voxrecorder.util.Util
-import com.pawegio.kandroid.defaultSharedPreferences
+import cafe.adriel.voxrecorder.util.pref
 import com.tsengvn.typekit.Typekit
 
 class App: Application() {
@@ -34,7 +34,7 @@ class App: Application() {
         // AndroidAudioRecorder only supports WAV format and
         // AndroidAudioConverter doesn't supports x86 ABI
         if (Util.isCpu86()) {
-            defaultSharedPreferences.edit()
+            pref().edit()
                     .putString(Constant.PREF_RECORDING_FORMAT, "wav")
                     .apply()
         }

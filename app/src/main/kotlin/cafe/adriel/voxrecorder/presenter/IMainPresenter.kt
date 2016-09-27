@@ -10,5 +10,6 @@ interface IMainPresenter {
     fun rename(recording: Recording, newName: String)
     fun delete(recording: Recording)
     fun share(activity: Activity, recording: Recording)
+    fun isValidFileName(fileName: String): Boolean
     fun unsubscribe()
 }

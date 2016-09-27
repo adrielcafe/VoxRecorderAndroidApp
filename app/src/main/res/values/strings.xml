@@ -24,6 +24,16 @@
     <string name="give_five_stars">Give 5 stars to Vox!</string>
     <string name="version">Version</string>
     <string name="this_recording_was_created_using_vox">This recording was created using Vox Recorder (%1$s)</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_name">New name</string>
+    <string name="rename">Rename</string>
+    <string name="rename_recording">Rename recording</string>
+    <string name="delete">Delete</string>
+    <string name="delete_recording">Delete recording</string>
+    <string name="confirm_deletion_recording">Do you really want to delete \"%1$s\"?</string>
+    <string name="invalid_filename">Invalid filename</string>
+    <string name="unable_rename_file">Unable to rename file</string>
+    <string name="unable_delete_file">Unable to delete file</string>
 
     <string-array name="pref_recording_format_titles">
         <item>WAV</item>
