@@ -7,6 +7,7 @@ import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.repository.RecordingRepository
+import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.IMainView
 import rx.Subscription
 
@@ -39,7 +40,7 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun share(activity: Activity, recording: Recording) {
-        val text = activity.getString(R.string.this_recording_was_created_using_vox, Constant.GOOGLE_PLAY_URL)
+        val text = string(R.string.this_recording_was_created_using_vox, Constant.GOOGLE_PLAY_URL)
         ShareCompat.IntentBuilder.from(activity)
                 .setText(text)
                 .setStream(Uri.fromFile(recording.file))

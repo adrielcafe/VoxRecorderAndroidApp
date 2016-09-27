@@ -45,7 +45,7 @@ dependencies {
 
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.pawegio.kandroid:kandroid:0.6.12@aar' // https://github.com/pawegio/KAndroid
+    compile 'com.pawegio.kandroid:kandroid:0.6.14@aar' // https://github.com/pawegio/KAndroid
     compile 'com.github.tinsukE:icekick:0.1@aar' // https://github.com/tinsukE/icekick
 
     // Android
@@ -63,12 +63,11 @@ dependencies {
 
     // Rx
     compile 'io.reactivex:rxjava:1.2.0'
-    compile 'io.reactivex:rxkotlin:0.60.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.eightbitlab:rxbus:1.0.2'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0'
 
     // Core
-    compile 'com.github.jksiezni.permissive:permissive:0.1@aar'
 //    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
 }

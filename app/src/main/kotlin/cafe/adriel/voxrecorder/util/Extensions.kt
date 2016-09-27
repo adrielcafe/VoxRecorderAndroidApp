@@ -57,8 +57,8 @@ fun Int.prettyDuration(): String {
 
 fun Any.pref() = App.instance.defaultSharedPreferences
 fun Any.drawable(@DrawableRes resId: Int) = ContextCompat.getDrawable(App.instance, resId)
-fun Any.string(@StringRes resId: Int) = App.instance.getString(resId)
-fun Any.color(@ColorRes resId: Int) = App.instance.resources.getColor(resId)
+fun Any.string(@StringRes resId: Int, vararg args: String = emptyArray()) = App.instance.getString(resId, *args)
+fun Any.color(@ColorRes resId: Int) = ContextCompat.getColor(App.instance, resId)
 
 fun View.fadeIn() = startAnimation(AnimationUtils.loadAnimation(App.instance, android.R.anim.fade_in))
 fun View.fadeOut() = startAnimation(AnimationUtils.loadAnimation(App.instance, android.R.anim.fade_out))

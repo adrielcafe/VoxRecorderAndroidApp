@@ -12,15 +12,18 @@ import android.view.MenuItem
 import cafe.adriel.androidaudiorecorder.AndroidAudioRecorder
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
+import cafe.adriel.voxrecorder.model.entity.LoadRecordingsEvent
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.entity.RecordingAddedEvent
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
+import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.ui.base.BaseActivity
 import com.eightbitlab.rxbus.Bus
-import com.github.jksiezni.permissive.Permissive
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.IntentFor
+import com.pawegio.kandroid.toast
+import com.tbruyelle.rxpermissions.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity: BaseActivity() {
@@ -36,22 +39,15 @@ class MainActivity: BaseActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        // TODO
-        Permissive.Request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
-                .withRationale({ activity, allowablePermissions, messenger ->
-//                    Snackbar.make(lRoot, R.string., Snackbar.LENGTH_LONG)
-//                            .setAction(R.string., {
-//                                messenger.cancelRequest()
-//                            })
-//                            .show()
-                })
-                .whenPermissionsGranted({
-
-                })
-                .whenPermissionsRefused({
-
-                })
-                .execute(this)
+        RxPermissions.getInstance(this)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe { granted ->
+                    if(granted){
+                        Bus.send(LoadRecordingsEvent())
+                    } else {
+                        toast(string(R.string.missing_permission))
+                    }
+                }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -67,6 +63,7 @@ class MainActivity: BaseActivity() {
         menuInflater.inflate(R.menu.main, menu)
         menu?.run {
             findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
+            findItem(R.id.search)?.setFontIcon(GoogleMaterial.Icon.gmd_search)
             findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
             findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)
         }
@@ -76,6 +73,10 @@ class MainActivity: BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.upgrade_pro -> {
+                // TODO
+                return true
+            }
+            R.id.search -> {
                 // TODO
                 return true
             }
@@ -111,11 +112,19 @@ class MainActivity: BaseActivity() {
 
     // TODO
     fun newRecording(){
-        AndroidAudioRecorder.with(this)
-                .setColor(Util.getRecorderColor())
-                .setFilePath(Constant.TEMP_RECORDING_FILE)
-                .setRequestCode(REQUEST_NEW_RECORDING)
-                .record()
+        RxPermissions.getInstance(this)
+                .request(Manifest.permission.RECORD_AUDIO)
+                .subscribe { granted ->
+                    if(granted){
+                        AndroidAudioRecorder.with(this)
+                                .setColor(Util.getRecorderColor())
+                                .setFilePath(Constant.TEMP_RECORDING_FILE)
+                                .setRequestCode(REQUEST_NEW_RECORDING)
+                                .record()
+                    } else {
+                        toast(string(R.string.missing_permission))
+                    }
+                }
     }
 
 }

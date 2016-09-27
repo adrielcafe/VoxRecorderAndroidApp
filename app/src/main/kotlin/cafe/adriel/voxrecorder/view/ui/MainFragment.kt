@@ -9,10 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.model.entity.Recording
-import cafe.adriel.voxrecorder.model.entity.RecordingAddedEvent
-import cafe.adriel.voxrecorder.model.entity.RecordingDeletedEvent
-import cafe.adriel.voxrecorder.model.entity.RecordingErrorEvent
+import cafe.adriel.voxrecorder.model.entity.*
 import cafe.adriel.voxrecorder.presenter.MainPresenter
 import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.IMainView
@@ -29,7 +26,7 @@ import kotlinx.android.synthetic.main.list_item_recording.view.*
 
 class MainFragment: BaseFragment(), IMainView {
 
-    private val presenter = MainPresenter(this)
+    val presenter = MainPresenter(this)
 
     private lateinit var adapter: RecordingAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -58,7 +55,9 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.load()
+        Bus.observe<LoadRecordingsEvent>()
+                .subscribe { presenter.load() }
+                .registerInBus(this)
         Bus.observe<RecordingAddedEvent>()
                 .subscribe { onRecordingAdded(it.recording) }
                 .registerInBus(this)
@@ -79,6 +78,14 @@ class MainFragment: BaseFragment(), IMainView {
         super.onDestroy()
         presenter.unsubscribe()
         adapter.recordingPresenter.onDestroy()
+    }
+
+    override fun onRecordingAdded(recording: Recording) {
+        adapter.addRecording(recording)
+    }
+
+    override fun onRecordingDeleted(recording: Recording) {
+        adapter.removeRecording(recording)
     }
 
     override fun showRenameDialog(recording: Recording) {
@@ -102,21 +109,13 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun showDeleteDialog(recording: Recording) {
         AlertDialog.Builder(context)
-            .setTitle(R.string.delete_recording)
-            .setMessage(getString(R.string.confirm_deletion_recording, recording.nameWithFormat))
-            .setNegativeButton(R.string.cancel, { di, i -> })
-            .setPositiveButton(R.string.delete, { di, i ->
-                presenter.delete(recording)
-            })
-            .show()
-    }
-
-    override fun onRecordingAdded(recording: Recording) {
-        adapter.addRecording(recording)
-    }
-
-    override fun onRecordingDeleted(recording: Recording) {
-        adapter.removeRecording(recording)
+                .setTitle(R.string.delete_recording)
+                .setMessage(string(R.string.confirm_deletion_recording, recording.nameWithFormat))
+                .setNegativeButton(R.string.cancel, { di, i -> })
+                .setPositiveButton(R.string.delete, { di, i ->
+                    presenter.delete(recording)
+                })
+                .show()
     }
 
     override fun showError(resId: Int) {

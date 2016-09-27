@@ -4,7 +4,6 @@
     <color name="color_primary">@color/wet_asphalt</color>
     <color name="color_primary_dark">#2C3E50</color>
     <color name="color_accent">#16A085</color>
-    <color name="color_accent_alpha">#3316A085</color>
 
     <color name="turquoise">#1ABC9C</color>
     <color name="peter_river">#3498DB</color>
@@ -16,6 +15,8 @@
     <color name="wet_asphalt">#34495E</color>
 
     <color name="recording_menu_bg">@color/clouds</color>
+
+    <color name="grey_alpha">#33999999</color>
 
     <string-array name="pref_theme_recorder_color">
         <item>@color/turquoise</item>

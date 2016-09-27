@@ -26,10 +26,10 @@ object Util {
 
     fun isCpu86(): Boolean {
         var abi86 = false
-        fromApi(21){
+        fromApi(Build.VERSION_CODES.LOLLIPOP){
             abi86 = Build.SUPPORTED_ABIS.any { it.contains("86") }
         }
-        toApi(21){
+        toApi(Build.VERSION_CODES.LOLLIPOP){
             abi86 = Build.CPU_ABI.contains("86") || Build.CPU_ABI2.contains("86")
         }
         return abi86
