@@ -16,13 +16,13 @@ object Util {
             if(isDarkTheme()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
 
     fun getRecorderColor() =
-            pref().getInt(Constant.PREF_THEME_RECORDER_COLOR, color(R.color.peter_river))
+            pref().getInt(Constant.PREF_THEME_RECORDER_COLOR, color(R.color.turquoise))
 
     fun isRecorderColorBright() =
             cafe.adriel.androidaudiorecorder.Util.isBrightColor(getRecorderColor())
 
     fun isSupportedFormat(filePath: String) =
-            Constant.SUPPORTED_FORMATS.any { filePath.endsWith(it, true) }
+            Constant.SUPPORTED_FORMATS_WITH_COLORS.keys.any { filePath.endsWith(it, true) }
 
     fun isCpu86(): Boolean {
         var abi86 = false

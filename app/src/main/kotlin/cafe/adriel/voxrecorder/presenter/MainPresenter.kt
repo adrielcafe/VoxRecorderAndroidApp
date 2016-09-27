@@ -13,7 +13,7 @@ import rx.Subscription
 class MainPresenter(val view: IMainView): IMainPresenter {
 
     private val recordingRepo = RecordingRepository()
-    private lateinit var subscription : Subscription
+    private var subscription : Subscription? = null
 
     override fun load() {
         unsubscribe()
@@ -47,8 +47,8 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun unsubscribe() {
-        if(!subscription.isUnsubscribed) {
-            subscription.unsubscribe()
+        if(subscription != null && !subscription!!.isUnsubscribed) {
+            subscription?.unsubscribe()
         }
     }
 

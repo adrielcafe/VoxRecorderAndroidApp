@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
@@ -119,6 +120,7 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
             v.tag = this
             v.vTitle.text = recording.name
             v.vFormat.text = recording.format
+            v.vFormat.setBackgroundColor(Constant.SUPPORTED_FORMATS_WITH_COLORS[recording.format]!!)
             v.vDate.text = recording.date.prettyDate()
             v.vSize.text = recording.size.prettySize()
             v.vDuration.text = recording.duration.prettyDuration()

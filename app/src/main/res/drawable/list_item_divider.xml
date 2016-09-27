@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <size android:height="0.5dp" />
-    <solid android:color="@color/grey_alpha" />
+    <solid android:color="@color/color_accent_alpha" />
 </shape>

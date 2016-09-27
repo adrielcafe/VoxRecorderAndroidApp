@@ -15,7 +15,7 @@
         <org.xdty.preference.ColorPreference
             android:key="theme_recorder_color"
             android:title="@string/recorder_color"
-            android:defaultValue="@color/peter_river"
+            android:defaultValue="@color/turquoise"
             app:cp_dialogTitle="@string/recorder_color"
             app:cp_colors="@array/pref_theme_recorder_color"
             app:cp_columns="4"

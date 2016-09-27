@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/wet_asphalt</color>
-    <color name="colorPrimaryDark">#2C3E50</color>
-    <color name="colorAccent">#3498db</color>
-
-    <color name="grey_alpha">#33888888</color>
+    <color name="color_primary">@color/wet_asphalt</color>
+    <color name="color_primary_dark">#2C3E50</color>
+    <color name="color_accent">#16A085</color>
+    <color name="color_accent_alpha">#3316A085</color>
 
     <color name="turquoise">#1ABC9C</color>
     <color name="peter_river">#3498DB</color>
