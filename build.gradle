@@ -1,14 +1,12 @@
 buildscript {
-    ext {
-        support_version = '24.2.1'
-        kotlin_version = '1.0.3'
-    }
+    ext.support_version = '24.2.1'
+    ext.kotlin_version = '1.0.4'
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0-rc2'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.ofg:uptodate-gradle-plugin:1.6.2'
     }
@@ -18,7 +16,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        maven { url "https://jitpack.io" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

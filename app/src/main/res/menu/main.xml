@@ -4,8 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/upgrade_pro"
+        android:title="@string/upgrade_pro"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/filter"
+        android:title="@string/filter"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>

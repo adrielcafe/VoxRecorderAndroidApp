@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.ofg.uptodate'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "cafe.adriel.voxrecorder"
         versionCode 1
@@ -24,7 +25,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,22 +33,18 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support
-    compile "com.android.support:support-v4:${support_version}"
-    compile "com.android.support:appcompat-v7:${support_version}"
-    compile "com.android.support:recyclerview-v7:${support_version}"
-    compile "com.android.support:preference-v14:${support_version}"
-    compile "com.android.support:design:${support_version}"
+    compile "com.android.support:support-v4:$support_version"
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
+    compile "com.android.support:preference-v14:$support_version"
+    compile "com.android.support:design:$support_version"
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.pawegio.kandroid:kandroid:0.6.12@aar' // https://github.com/pawegio/KAndroid
     compile 'com.github.tinsukE:icekick:0.1@aar' // https://github.com/tinsukE/icekick
 
@@ -56,16 +52,23 @@ dependencies {
     compile 'com.mikepenz:iconics-core:2.8.1@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.tsengvn:typekit:1.0.1@aar'
-    compile 'com.thebluealliance:spectrum:0.6.0@aar'
-//    compile 'com.github.tajchert:nammu:1.1.1@aar'
+    compile 'org.zakariya.flyoutmenus:flyoutmenu:0.5.3@aar'
+    compile 'com.github.iammert:ProgressLayout:a481ddc'
+    compile 'com.github.adrielcafe:ColorPicker:a06614f'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
-//    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
     // Audio
     compile 'com.github.adrielcafe:AndroidAudioRecorder:0.1.0'
 //    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 
+    // Rx
+    compile 'io.reactivex:rxjava:1.2.0'
+    compile 'io.reactivex:rxkotlin:0.60.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.eightbitlab:rxbus:1.0.2'
+
     // Core
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.jksiezni.permissive:permissive:0.1@aar'
+//    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/wet_asphalt</color>
-    <color name="colorPrimaryDark">#2C3E50</color>
-    <color name="colorAccent">#D35400</color>
+    <color name="color_primary">@color/wet_asphalt</color>
+    <color name="color_primary_dark">#2C3E50</color>
+    <color name="color_accent">#16A085</color>
+    <color name="color_accent_alpha">#3316A085</color>
 
     <color name="turquoise">#1ABC9C</color>
     <color name="peter_river">#3498DB</color>
@@ -13,5 +14,18 @@
     <color name="alizarin">#E74C3C</color>
     <color name="clouds">#ECF0F1</color>
     <color name="wet_asphalt">#34495E</color>
+
+    <color name="recording_menu_bg">@color/clouds</color>
+
+    <string-array name="pref_theme_recorder_color">
+        <item>@color/turquoise</item>
+        <item>@color/peter_river</item>
+        <item>@color/amethyst</item>
+        <item>@color/sun_flower</item>
+        <item>@color/carrot</item>
+        <item>@color/alizarin</item>
+        <item>@color/clouds</item>
+        <item>@color/wet_asphalt</item>
+    </string-array>
 
 </resources>

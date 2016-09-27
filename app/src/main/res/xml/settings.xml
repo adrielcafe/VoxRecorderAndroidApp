@@ -4,6 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.preference.PreferenceCategory
+        android:key="theme"
+        android:title="@string/theme">
+
+        <android.support.v14.preference.SwitchPreference
+            android:key="theme_dark_mode"
+            android:title="@string/dark_mode"
+            android:defaultValue="false"/>
+
+        <org.xdty.preference.ColorPreference
+            android:key="theme_recorder_color"
+            android:title="@string/recorder_color"
+            android:defaultValue="@color/turquoise"
+            app:cp_dialogTitle="@string/recorder_color"
+            app:cp_colors="@array/pref_theme_recorder_color"
+            app:cp_columns="4"
+            app:cp_material="true"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
         android:key="recording"
         android:title="@string/recording">
 
@@ -38,24 +58,6 @@
             android:entries="@array/pref_recording_source_titles"
             android:entryValues="@array/pref_recording_source_values"
             android:defaultValue="mic"/>
-
-    </android.support.v7.preference.PreferenceCategory>
-
-    <android.support.v7.preference.PreferenceCategory
-        android:key="theme"
-        android:title="@string/theme">
-
-        <android.support.v14.preference.SwitchPreference
-            android:key="theme_dark_mode"
-            android:title="@string/dark_mode"
-            android:defaultValue="false"/>
-
-        <com.thebluealliance.spectrum.SpectrumPreferenceCompat
-            android:key="theme_recorder_color"
-            android:title="@string/recorder_color"
-            android:defaultValue="@color/carrot"
-            app:spectrum_columnCount="4"
-            app:spectrum_colors="@array/pref_theme_recorder_color"/>
 
     </android.support.v7.preference.PreferenceCategory>
 

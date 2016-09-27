@@ -1,4 +1,4 @@
-package cafe.adriel.voxrecorder.ui.base
+package cafe.adriel.voxrecorder.view.ui.base
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,17 +7,17 @@ import android.preference.PreferenceManager
 import android.support.v4.view.LayoutInflaterCompat
 import android.support.v7.app.AppCompatActivity
 import cafe.adriel.voxrecorder.Constant
-import cafe.adriel.voxrecorder.ui.SettingsActivity
 import cafe.adriel.voxrecorder.util.recreateWithThemeMode
+import cafe.adriel.voxrecorder.view.ui.SettingsActivity
 import com.mikepenz.iconics.context.IconicsLayoutInflater
 import com.tinsuke.icekick.freezeInstanceState
 import com.tinsuke.icekick.state
 import com.tinsuke.icekick.unfreezeInstanceState
 import com.tsengvn.typekit.TypekitContextWrapper
 
-open class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+abstract class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    var shouldRecreateOnFocus by state(false)
+    private var shouldRecreateOnFocus by state(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory(layoutInflater, IconicsLayoutInflater(delegate))
@@ -47,11 +47,6 @@ open class BaseActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefere
                 if(this is SettingsActivity){
                     recreateWithThemeMode()
                 } else {
-                    shouldRecreateOnFocus = true
-                }
-            }
-            Constant.PREF_THEME_RECORDER_COLOR -> {
-                if(this !is SettingsActivity){
                     shouldRecreateOnFocus = true
                 }
             }
