@@ -41,7 +41,7 @@ class MainFragment: BaseFragment(), IMainView {
                 override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
-                        adapter?.recordings?.forEachIndexed { i, r ->
+                        adapter?.items?.forEachIndexed { i, r ->
                             layoutManager?.findViewByPosition(i)?.vMenu?.dismiss()
                         }
                     }

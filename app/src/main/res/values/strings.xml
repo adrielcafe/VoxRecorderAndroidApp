@@ -36,6 +36,10 @@
     <string name="unable_rename_file">Unable to rename file</string>
     <string name="unable_delete_file">Unable to delete file</string>
     <string name="missing_permission">Missing permission</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="oldest">Oldest</string>
 
     <string-array name="pref_recording_format_titles">
         <item>WAV</item>

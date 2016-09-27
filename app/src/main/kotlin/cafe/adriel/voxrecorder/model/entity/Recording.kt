@@ -16,18 +16,18 @@ data class Recording(val filePath: String): Parcelable {
     val playable = duration > 0
     val date = Date(file.lastModified())
 
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<Recording> = object: Parcelable.Creator<Recording> {
+            override fun createFromParcel(source: Parcel): Recording = Recording(source)
+            override fun newArray(size: Int): Array<Recording?> = arrayOfNulls(size)
+        }
+    }
+
     constructor(source: Parcel): this(source.readString())
 
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.writeString(filePath)
-    }
-
-    companion object {
-        @JvmField val CREATOR: Parcelable.Creator<Recording> = object: Parcelable.Creator<Recording> {
-            override fun createFromParcel(source: Parcel): Recording = Recording(source)
-            override fun newArray(size: Int): Array<Recording?> = arrayOfNulls(size)
-        }
     }
 }

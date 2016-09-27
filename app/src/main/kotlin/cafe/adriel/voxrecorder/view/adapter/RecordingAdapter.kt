@@ -7,41 +7,58 @@ import android.view.View
 import android.view.ViewGroup
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
+import cafe.adriel.voxrecorder.model.entity.DateSeparator
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.presenter.IMainPresenter
 import cafe.adriel.voxrecorder.presenter.RecordingPresenter
 import cafe.adriel.voxrecorder.util.prettyDate
 import cafe.adriel.voxrecorder.util.prettyDuration
 import cafe.adriel.voxrecorder.util.prettySize
+import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.IRecordingView
 import cafe.adriel.voxrecorder.view.ui.widget.RecyclerItemMenu
 import co.mobiwise.library.ProgressLayoutListener
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import kotlinx.android.synthetic.main.list_item_date_separator.view.*
 import kotlinx.android.synthetic.main.list_item_recording.view.*
 import org.zakariya.flyoutmenu.FlyoutMenuView
 import java.util.*
 
 class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter, val layoutManager: RecyclerView.LayoutManager):
-        RecyclerView.Adapter<RecordingAdapter.ViewHolder>(), IRecordingView {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>(), IRecordingView {
+
+    val VIEW_TYPE_SEPARATOR = 0
+    val VIEW_TYPE_RECORDING = 1
 
     val recordingPresenter = RecordingPresenter(this)
-    val recordings = LinkedList<Recording>()
+    val items = LinkedList<Any>().apply { addAll(mainPresenter.getDateSeparators()) }
 
     val iconPlay = GoogleMaterial.Icon.gmd_play_arrow.formattedName!!
     val iconPause = GoogleMaterial.Icon.gmd_pause.formattedName!!
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+        if(viewType == VIEW_TYPE_SEPARATOR){
+            val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_date_separator, parent, false)
+            return DateSeparadorViewHolder(v)
+        } else {
+            val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
+            return RecordingViewHolder(v)
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bind(recordings[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        when(getItemViewType(position)){
+            VIEW_TYPE_SEPARATOR ->
+                (holder as DateSeparadorViewHolder).bind(items[position] as DateSeparator)
+            VIEW_TYPE_RECORDING ->
+                (holder as RecordingViewHolder).bind(items[position] as Recording)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return recordings.size
-    }
+    override fun getItemViewType(position: Int) =
+            if(items[position] is DateSeparator) VIEW_TYPE_SEPARATOR else VIEW_TYPE_RECORDING
+
+    override fun getItemCount() = items.size
 
     override fun onPlay(recording: Recording) {
         updateRecordingView(recording, {
@@ -82,13 +99,19 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     }
 
     fun addRecording(recording: Recording) {
-        if(!recordings.contains(recording)) {
-            recordings.run {
+        if(!items.contains(recording)) {
+            items.run {
                 add(recording)
-                sortWith(Comparator { r1: Recording, r2: Recording ->
-                    r2.date.compareTo(r1.date).apply {
-                        if(this == 0){
-                            r1.name.compareTo(r2.name)
+                sortWith(Comparator { r1: Any, r2: Any ->
+                    val date1 = if(r1 is DateSeparator) r1.date else (r1 as Recording).date
+                    val date2 = if(r2 is DateSeparator) r2.date else (r2 as Recording).date
+                    date2.compareTo(date1).apply {
+                        if(r1 is DateSeparator){
+                            -1
+                        } else if(r2 is DateSeparator){
+                            1
+                        } else if(this == 0){
+                            (r1 as Recording).name.toLowerCase().compareTo((r2 as Recording).name.toLowerCase())
                         } else {
                             this
                         }
@@ -100,22 +123,31 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     }
 
     fun removeRecording(recording: Recording) {
-        val index = recordings.indexOf(recording)
-        if(recordings.remove(recording)){
+        val index = items.indexOf(recording)
+        if(items.remove(recording)){
             notifyItemRemoved(index)
         }
     }
 
     private fun updateRecordingView(recording: Recording, callback: (View) -> Unit) {
-        val index = getRecordingIndex(recording)
-        val holder = layoutManager?.findViewByPosition(index)?.tag as ViewHolder
+        val index = getItemIndex(recording)
+        val holder = getViewHolder(index)
         holder.itemView.run { callback(this) }
     }
 
-    private fun getRecordingIndex(recording: Recording) =
-            recordings.indexOfFirst{ it.equals(recording) }
+    private fun getViewHolder(index: Int) = layoutManager?.findViewByPosition(index)?.tag as RecyclerView.ViewHolder
 
-    inner class ViewHolder(val v: View): RecyclerView.ViewHolder(v) {
+    private fun getItemIndex(item: Any) =
+            items.indexOfFirst{ it.equals(item) }
+
+    inner class DateSeparadorViewHolder(val v: View): RecyclerView.ViewHolder(v) {
+        fun bind(dateSeparator: DateSeparator){
+            v.tag = this
+            v.vDateSeparator.text = string(dateSeparator.titleResId)
+        }
+    }
+
+    inner class RecordingViewHolder(val v: View): RecyclerView.ViewHolder(v) {
         fun bind(recording: Recording){
             v.tag = this
             v.vTitle.text = recording.name
