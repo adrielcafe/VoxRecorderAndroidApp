@@ -8,15 +8,15 @@
         android:title="@string/upgrade_pro"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/search"
-        android:title="@string/search"
-        app:showAsAction="always"/>
+    <!--<item-->
+        <!--android:id="@+id/search"-->
+        <!--android:title="@string/search"-->
+        <!--app:showAsAction="always"/>-->
 
-    <item
-        android:id="@+id/filter"
-        android:title="@string/filter"
-        app:showAsAction="always"/>
+    <!--<item-->
+        <!--android:id="@+id/filter"-->
+        <!--android:title="@string/filter"-->
+        <!--app:showAsAction="always"/>-->
 
     <item
         android:id="@+id/settings"

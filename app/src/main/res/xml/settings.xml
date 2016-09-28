@@ -59,6 +59,18 @@
             android:entryValues="@array/pref_recording_source_values"
             android:defaultValue="mic"/>
 
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="recording_autoplay"
+            android:title="@string/autoplay"
+            android:summary="@string/auto_begin_recording_when_recorder_opens"
+            android:defaultValue="false"/>
+
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="recording_keep_display_on"
+            android:title="@string/keep_display_on"
+            android:summary="@string/keep_display_on_while_recording"
+            android:defaultValue="true"/>
+
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory

@@ -15,6 +15,7 @@ import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.LoadRecordingsEvent
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.entity.RecordingAddedEvent
+import cafe.adriel.voxrecorder.util.PrefUtil
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
 import cafe.adriel.voxrecorder.util.string
@@ -63,8 +64,8 @@ class MainActivity: BaseActivity() {
         menuInflater.inflate(R.menu.main, menu)
         menu?.run {
             findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
-            findItem(R.id.search)?.setFontIcon(GoogleMaterial.Icon.gmd_search)
-            findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
+//            findItem(R.id.search)?.setFontIcon(GoogleMaterial.Icon.gmd_search)
+//            findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
             findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)
         }
         return true
@@ -76,14 +77,14 @@ class MainActivity: BaseActivity() {
                 // TODO
                 return true
             }
-            R.id.search -> {
-                // TODO
-                return true
-            }
-            R.id.filter -> {
-                // TODO
-                return true
-            }
+//            R.id.search -> {
+//                // TODO
+//                return true
+//            }
+//            R.id.filter -> {
+//                // TODO
+//                return true
+//            }
             R.id.settings -> {
                 startActivity(IntentFor<SettingsActivity>(this))
                 return true
@@ -103,24 +104,28 @@ class MainActivity: BaseActivity() {
 
     fun setupFab(){
         vFab.run {
-            backgroundTintList = ColorStateList.valueOf(Util.getRecorderColor())
+            backgroundTintList = ColorStateList.valueOf(PrefUtil.getRecorderColor())
             imageTintList = ColorStateList.valueOf(
                     if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
             setOnClickListener { newRecording() }
         }
     }
 
-    // TODO
     fun newRecording(){
         RxPermissions.getInstance(this)
                 .request(Manifest.permission.RECORD_AUDIO)
                 .subscribe { granted ->
                     if(granted){
                         AndroidAudioRecorder.with(this)
-                                .setColor(Util.getRecorderColor())
-                                .setFilePath(Constant.TEMP_RECORDING_FILE)
-                                .setRequestCode(REQUEST_NEW_RECORDING)
-                                .record()
+                            .setRequestCode(REQUEST_NEW_RECORDING)
+                            .setFilePath(Constant.TEMP_RECORDING_FILE)
+                            .setColor(PrefUtil.getRecorderColor())
+                            .setAutoStart(PrefUtil.isAutoStart())
+                            .setKeepDisplayOn(PrefUtil.isKeepDisplayOn())
+                            .setSource(PrefUtil.getSource())
+                            .setChannel(PrefUtil.getChannel())
+                            .setSampleRate(PrefUtil.getSampleRate())
+                            .record()
                     } else {
                         toast(string(R.string.missing_permission))
                     }

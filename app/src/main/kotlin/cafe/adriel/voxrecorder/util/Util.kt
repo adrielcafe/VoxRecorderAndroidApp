@@ -3,7 +3,6 @@ package cafe.adriel.voxrecorder.util
 import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 import cafe.adriel.voxrecorder.Constant
-import cafe.adriel.voxrecorder.R
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
 
@@ -15,11 +14,8 @@ object Util {
     fun getThemeMode() =
             if(isDarkTheme()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
 
-    fun getRecorderColor() =
-            pref().getInt(Constant.PREF_THEME_RECORDER_COLOR, color(R.color.turquoise))
-
     fun isRecorderColorBright() =
-            cafe.adriel.androidaudiorecorder.Util.isBrightColor(getRecorderColor())
+            cafe.adriel.androidaudiorecorder.Util.isBrightColor(PrefUtil.getRecorderColor())
 
     fun isSupportedFormat(filePath: String) =
             Constant.SUPPORTED_FORMATS_WITH_COLORS.keys.any { filePath.endsWith(it, true) }

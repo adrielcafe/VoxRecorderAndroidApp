@@ -2,6 +2,7 @@ package cafe.adriel. voxrecorder.view.ui
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ShareCompat
 import android.support.v7.preference.PreferenceFragmentCompat
@@ -42,7 +43,16 @@ class SettingsFragment: PreferenceFragmentCompat(), ISettingsView {
     override fun sendFeedback(){
         val subject = "${string(R.string.app_name)} - ${string(R.string.help_feedback)}"
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto: ${Constant.CONTACT_EMAIL}"))
+        val text = """
+            |App: ${string(R.string.app_version)}
+            |OS: ${Build.VERSION.RELEASE} (${Build.VERSION.SDK_INT})
+            |CPU: ${Build.SUPPORTED_ABIS.joinToString { it }}
+            |Device: ${Build.BRAND} ${Build.DEVICE} ${Build.MODEL}
+            |
+            |
+            """.trimMargin()
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, text)
         startActivity(Intent.createChooser(intent, string(R.string.send_me_email)))
     }
 

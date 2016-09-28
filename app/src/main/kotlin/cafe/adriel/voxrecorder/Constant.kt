@@ -26,6 +26,8 @@ object Constant {
     val PREF_RECORDING_SAMPLE_RATE = "recording_sample_rate"
     val PREF_RECORDING_CHANNEL = "recording_channel"
     val PREF_RECORDING_SOURCE = "recording_source"
+    val PREF_RECORDING_AUTO_PLAY = "recording_autoplay"
+    val PREF_RECORDING_KEEP_DISPLAY_ON = "recording_keep_display_on"
     val PREF_ABOUT = "about"
     val PREF_ABOUT_HELP_FEEDBACK = "about_help_feedback"
     val PREF_ABOUT_RATE = "about_rate"
