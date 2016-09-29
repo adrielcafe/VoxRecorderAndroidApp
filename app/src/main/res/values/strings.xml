@@ -2,6 +2,9 @@
 
     <string name="app_name" translatable="false">Vox Recorder</string>
 
+    <string name="upgrade_pro">Upgrade to PRO</string>
+    <string name="filter">Filter</string>
+    <string name="search">Search</string>
     <string name="settings">Settings</string>
     <string name="recording">Recording</string>
     <string name="audio_file_format">Audio file format</string>
@@ -21,6 +24,26 @@
     <string name="rate_app">Rate the app</string>
     <string name="give_five_stars">Give 5 stars to Vox!</string>
     <string name="version">Version</string>
+    <string name="this_recording_was_created_using_vox">This recording was created using Vox Recorder (%1$s)</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_name">New name</string>
+    <string name="rename">Rename</string>
+    <string name="rename_recording">Rename recording</string>
+    <string name="delete">Delete</string>
+    <string name="delete_recording">Delete recording</string>
+    <string name="confirm_deletion_recording">Do you really want to delete \"%1$s\"?</string>
+    <string name="invalid_filename">Invalid filename</string>
+    <string name="unable_rename_file">Unable to rename file</string>
+    <string name="unable_delete_file">Unable to delete file</string>
+    <string name="missing_permission">Missing permission</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="oldest">Oldest</string>
+    <string name="autoplay">Autoplay</string>
+    <string name="auto_begin_recording_when_recorder_opens">Automatically begin recording when recorder opens</string>
+    <string name="keep_display_on">Keep display on</string>
+    <string name="keep_display_on_while_recording">Keep the display on while you are recording</string>
 
     <string-array name="pref_recording_format_titles">
         <item>WAV</item>
@@ -40,13 +63,13 @@
     </string-array>
 
     <string-array name="pref_recording_sample_rate_titles">
-        <item>48000 Hz</item>
-        <item>44100 Hz</item>
-        <item>32000 Hz</item>
-        <item>22050 Hz</item>
-        <item>16000 Hz</item>
-        <item>11025 Hz</item>
-        <item>8000 Hz</item>
+        <item>48.000 Hz</item>
+        <item>44.100 Hz</item>
+        <item>32.000 Hz</item>
+        <item>22.050 Hz</item>
+        <item>16.000 Hz</item>
+        <item>11.025 Hz</item>
+        <item>8.000 Hz</item>
     </string-array>
     <string-array name="pref_recording_sample_rate_values">
         <item>48000</item>
@@ -70,23 +93,10 @@
     <string-array name="pref_recording_source_titles">
         <item>Mic</item>
         <item>Camcorder</item>
-        <item>System Default</item>
     </string-array>
     <string-array name="pref_recording_source_values">
         <item>mic</item>
         <item>camcorder</item>
-        <item>system_default</item>
-    </string-array>
-
-    <string-array name="pref_theme_recorder_color">
-        <item>@color/turquoise</item>
-        <item>@color/peter_river</item>
-        <item>@color/amethyst</item>
-        <item>@color/sun_flower</item>
-        <item>@color/carrot</item>
-        <item>@color/alizarin</item>
-        <item>@color/clouds</item>
-        <item>@color/wet_asphalt</item>
     </string-array>
 
 </resources>

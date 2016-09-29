@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.MainActivity">
+    tools:context=".view.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,35 +14,36 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarView"
+            android:id="@+id/vToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
-                android:layout_width="56dp"
-                android:layout_height="25dp"
+                android:layout_width="62dp"
+                android:layout_height="28dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/logo_toolbar"/>
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        android:id="@+id/mainFrag"
-        android:name="cafe.adriel.voxrecorder.ui.MainFragment"
+        android:id="@+id/fMain"
+        android:name="cafe.adriel.voxrecorder.view.ui.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         tools:layout="@layout/fragment_main"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabView"
+        android:id="@+id/vFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"/>
+        android:layout_margin="@dimen/default_margin"
+        android:src="@drawable/logo_fab"/>
 
 </android.support.design.widget.CoordinatorLayout>

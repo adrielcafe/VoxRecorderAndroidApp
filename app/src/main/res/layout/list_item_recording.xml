@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <co.mobiwise.library.ProgressLayout
+        android:id="@+id/vProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyColor="@android:color/transparent"
+        app:loadedColor="@color/grey_alpha"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.mikepenz.iconics.view.IconicsButton
+            android:id="@+id/vControl"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:text="{gmd-play-arrow}"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/vControl"
+            android:layout_toStartOf="@+id/vMenu"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:paddingTop="@dimen/default_margin"
+            android:paddingBottom="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/vTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/default_half_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/vFormat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="@android:color/white"
+                    android:textAllCaps="true"
+                    android:background="@drawable/audio_format_tag"/>
+
+                <TextView
+                    android:id="@+id/vDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="@dimen/default_half_margin"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <org.zakariya.flyoutmenu.FlyoutMenuView
+            android:id="@+id/vMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/default_half_margin"
+            app:fmButtonSize="30dp"
+            app:fmButtonElevation="0dp"
+            app:fmMenuBackgroundColor="@color/recording_menu_bg"
+            app:fmMenuAnchor="center"
+            app:fmDialogMode="true"
+            app:fmItemHeight="40dp"
+            app:fmItemWidth="40dp"
+            app:fmShieldVisible="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/default_margin">
+
+        <TextView
+            android:id="@+id/vPlayedDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="start"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/vSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/vDuration"
+            android:layout_marginEnd="30dp"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+        <TextView
+            android:id="@+id/vDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
