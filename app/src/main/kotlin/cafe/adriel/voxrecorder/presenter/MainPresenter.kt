@@ -8,6 +8,7 @@ import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.DateSeparator
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.repository.RecordingRepository
+import cafe.adriel.voxrecorder.util.orFalse
 import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.IMainView
 import khronos.day
@@ -72,7 +73,7 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun unsubscribe() {
-        if(subscription != null && !subscription!!.isUnsubscribed) {
+        if(subscription != null && !subscription?.isUnsubscribed.orFalse()) {
             subscription?.unsubscribe()
         }
     }

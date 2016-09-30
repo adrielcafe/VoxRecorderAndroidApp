@@ -74,10 +74,15 @@ class MainFragment: BaseFragment(), IMainView {
         // TODO Sync files
     }
 
+    override fun onPause() {
+        super.onPause()
+        adapter.recordingPresenter.onPause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        presenter.unsubscribe()
         adapter.recordingPresenter.onDestroy()
+        presenter.unsubscribe()
     }
 
     override fun onRecordingAdded(recording: Recording) {

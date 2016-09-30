@@ -7,5 +7,6 @@ interface IRecordingPresenter {
     fun pause()
     fun stop()
     fun seekTo(progress: Int)
+    fun onPause()
     fun onDestroy()
 }
