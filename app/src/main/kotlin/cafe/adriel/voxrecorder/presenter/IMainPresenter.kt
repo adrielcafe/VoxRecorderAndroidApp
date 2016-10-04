@@ -1,7 +1,6 @@
 package cafe.adriel.voxrecorder.presenter
 
 import android.app.Activity
-import cafe.adriel.voxrecorder.model.entity.DateSeparator
 import cafe.adriel.voxrecorder.model.entity.Recording
 
 interface IMainPresenter {
@@ -12,6 +11,5 @@ interface IMainPresenter {
     fun delete(recording: Recording)
     fun share(activity: Activity, recording: Recording)
     fun isValidFileName(fileName: String): Boolean
-    fun getDateSeparators(): List<DateSeparator>
     fun unsubscribe()
 }

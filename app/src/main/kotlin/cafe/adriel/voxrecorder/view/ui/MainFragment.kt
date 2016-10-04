@@ -85,6 +85,10 @@ class MainFragment: BaseFragment(), IMainView {
         presenter.unsubscribe()
     }
 
+    override fun onLoadRecordings(recordings: List<Recording>) {
+        adapter.loadRecordings(recordings)
+    }
+
     override fun onRecordingAdded(recording: Recording) {
         adapter.addRecording(recording)
     }

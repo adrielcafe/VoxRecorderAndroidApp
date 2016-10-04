@@ -39,6 +39,7 @@
     <string name="today">Today</string>
     <string name="this_week">This week</string>
     <string name="this_month">This month</string>
+    <string name="this_year">This year</string>
     <string name="oldest">Oldest</string>
     <string name="autoplay">Autoplay</string>
     <string name="auto_begin_recording_when_recorder_opens">Automatically begin recording when recorder opens</string>

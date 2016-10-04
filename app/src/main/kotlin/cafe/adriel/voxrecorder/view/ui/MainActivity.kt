@@ -40,15 +40,17 @@ class MainActivity: BaseActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        RxPermissions.getInstance(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe { granted ->
-                    if(granted){
-                        Bus.send(LoadRecordingsEvent())
-                    } else {
-                        toast(string(R.string.missing_permission))
+        if(!recreating) {
+            RxPermissions.getInstance(this)
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe { granted ->
+                        if (granted) {
+                            Bus.send(LoadRecordingsEvent())
+                        } else {
+                            toast(string(R.string.missing_permission))
+                        }
                     }
-                }
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -63,7 +65,7 @@ class MainActivity: BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         menu?.run {
-            findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
+//            findItem(R.id.upgrade_pro)?.setFontIcon(GoogleMaterial.Icon.gmd_shop)
 //            findItem(R.id.search)?.setFontIcon(GoogleMaterial.Icon.gmd_search)
 //            findItem(R.id.filter)?.setFontIcon(GoogleMaterial.Icon.gmd_sort)
             findItem(R.id.settings)?.setFontIcon(GoogleMaterial.Icon.gmd_tune)
@@ -73,10 +75,10 @@ class MainActivity: BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
-            R.id.upgrade_pro -> {
-                // TODO
-                return true
-            }
+//            R.id.upgrade_pro -> {
+//                // TODO
+//                return true
+//            }
 //            R.id.search -> {
 //                // TODO
 //                return true

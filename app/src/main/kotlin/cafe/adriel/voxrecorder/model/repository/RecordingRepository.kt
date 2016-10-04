@@ -13,11 +13,12 @@ import java.io.File
 
 class RecordingRepository: IRepository<Recording> {
 
-    override fun get(): Observable<Recording> = Observable.defer {
+    override fun get(): Observable<List<Recording>> = Observable.defer {
         Observable.from(Constant.RECORDING_FOLDER.listFiles(){ file ->
             Util.isSupportedFormat(file.name)
         })
         .map { Recording(it.path) }
+        .toList()
     }
 
     override fun convert(item: Recording) {

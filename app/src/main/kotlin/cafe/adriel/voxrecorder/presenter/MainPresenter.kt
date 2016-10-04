@@ -5,17 +5,12 @@ import android.net.Uri
 import android.support.v4.app.ShareCompat
 import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
-import cafe.adriel.voxrecorder.model.entity.DateSeparator
 import cafe.adriel.voxrecorder.model.entity.Recording
 import cafe.adriel.voxrecorder.model.repository.RecordingRepository
 import cafe.adriel.voxrecorder.util.orFalse
 import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.IMainView
-import khronos.day
-import khronos.days
-import khronos.minus
 import rx.Subscription
-import java.util.*
 
 class MainPresenter(val view: IMainView): IMainPresenter {
 
@@ -26,7 +21,8 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     override fun load() {
         unsubscribe()
         subscription = recordingRepo.get()
-                .subscribe ({ view.onRecordingAdded(it) }, Throwable::printStackTrace)
+                .subscribe ({
+                    view.onLoadRecordings(it) }, Throwable::printStackTrace)
     }
 
     override fun showRenameDialog(recording: Recording) {
@@ -55,22 +51,6 @@ class MainPresenter(val view: IMainView): IMainPresenter {
     }
 
     override fun isValidFileName(fileName: String) = fileName.isNotEmpty()
-
-    override fun getDateSeparators(): List<DateSeparator> {
-        val today = Calendar.getInstance().let {
-            it.set(2016, 8, 27, 23, 59, 59)
-            it.time
-        }
-        val week = today - 1.day
-        val month = today - 7.days
-        val oldest = today - 30.days
-        return arrayListOf(
-                DateSeparator(R.string.today, today),
-                DateSeparator(R.string.this_week, week),
-                DateSeparator(R.string.this_month, month),
-                DateSeparator(R.string.oldest, oldest)
-        )
-    }
 
     override fun unsubscribe() {
         if(subscription != null && !subscription?.isUnsubscribed.orFalse()) {

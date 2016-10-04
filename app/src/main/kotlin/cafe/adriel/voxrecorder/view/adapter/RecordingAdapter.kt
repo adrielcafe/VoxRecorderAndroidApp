@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.DateSeparator
 import cafe.adriel.voxrecorder.model.entity.Recording
@@ -19,6 +18,7 @@ import cafe.adriel.voxrecorder.view.IRecordingView
 import cafe.adriel.voxrecorder.view.ui.widget.RecyclerItemMenu
 import co.mobiwise.library.ProgressLayoutListener
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import khronos.*
 import kotlinx.android.synthetic.main.list_item_date_separator.view.*
 import kotlinx.android.synthetic.main.list_item_recording.view.*
 import org.zakariya.flyoutmenu.FlyoutMenuView
@@ -31,7 +31,7 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     val VIEW_TYPE_RECORDING = 1
 
     val recordingPresenter = RecordingPresenter(this)
-    val items = LinkedList<Any>().apply { addAll(mainPresenter.getDateSeparators()) }
+    val items = LinkedList<Any>()
 
     val iconPlay = GoogleMaterial.Icon.gmd_play_arrow.formattedName!!
     val iconPause = GoogleMaterial.Icon.gmd_pause.formattedName!!
@@ -39,7 +39,7 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         if(viewType == VIEW_TYPE_SEPARATOR){
             val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_date_separator, parent, false)
-            return DateSeparadorViewHolder(v)
+            return DateSeparatorViewHolder(v)
         } else {
             val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_recording, parent, false)
             return RecordingViewHolder(v)
@@ -49,7 +49,7 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         when(getItemViewType(position)){
             VIEW_TYPE_SEPARATOR ->
-                (holder as DateSeparadorViewHolder).bind(items[position] as DateSeparator)
+                (holder as DateSeparatorViewHolder).bind(items[position] as DateSeparator)
             VIEW_TYPE_RECORDING ->
                 (holder as RecordingViewHolder).bind(items[position] as Recording)
         }
@@ -98,25 +98,26 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
         })
     }
 
+    fun loadRecordings(recordings: List<Recording>){
+        if(recordings.isNotEmpty()) {
+            items.run {
+                clear()
+                // TODO must check if separator exists and add if needed
+//                addAll(getDateSeparators())
+                addAll(recordings)
+                sort()
+                // TODO removing separators ok
+//                updateSeparators()
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     fun addRecording(recording: Recording) {
         if(!items.contains(recording)) {
             items.run {
                 add(recording)
-                sortWith(Comparator { r1: Any, r2: Any ->
-                    val date1 = if(r1 is DateSeparator) r1.date else (r1 as Recording).date
-                    val date2 = if(r2 is DateSeparator) r2.date else (r2 as Recording).date
-                    date2.compareTo(date1).apply {
-                        if(r1 is DateSeparator){
-                            -1
-                        } else if(r2 is DateSeparator){
-                            1
-                        } else if(this == 0){
-                            (r1 as Recording).name.toLowerCase().compareTo((r2 as Recording).name.toLowerCase())
-                        } else {
-                            this
-                        }
-                    }
-                })
+                sort()
                 notifyItemInserted(indexOf(recording))
             }
         }
@@ -135,12 +136,64 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
         holder.itemView.run { callback(this) }
     }
 
+    private fun sort(){
+        items.sortWith(Comparator { r1: Any, r2: Any ->
+            val date1 = if(r1 is DateSeparator) r1.date else (r1 as Recording).date
+            val date2 = if(r2 is DateSeparator) r2.date else (r2 as Recording).date
+            date2.compareTo(date1).apply {
+                if(r1 is DateSeparator){
+                    -1
+                } else if(r2 is DateSeparator){
+                    1
+                } else if(this == 0){
+                    (r1 as Recording).name.toLowerCase().compareTo((r2 as Recording).name.toLowerCase())
+                } else {
+                    this
+                }
+            }
+        })
+    }
+
     private fun getViewHolder(index: Int) = layoutManager?.findViewByPosition(index)?.tag as RecyclerView.ViewHolder
 
     private fun getItemIndex(item: Any) =
             items.indexOfFirst{ it.equals(item) }
 
-    inner class DateSeparadorViewHolder(val v: View): RecyclerView.ViewHolder(v) {
+    private fun getDateSeparators(): List<DateSeparator> {
+        val today = Dates.today.with(hour = 23, minute = 59, second = 59)
+        val week = today - 1.day
+        val month = today - 1.week
+        val year = today - 1.year
+        val oldest = today - 2.years
+        return listOf(
+                DateSeparator(R.string.today, today),
+                DateSeparator(R.string.this_week, week),
+                DateSeparator(R.string.this_month, month),
+                DateSeparator(R.string.this_year, year),
+                DateSeparator(R.string.oldest, oldest)
+        )
+    }
+
+    private fun updateSeparators(){
+        if(items.isNotEmpty()) {
+            var it = items.listIterator()
+            while(it.hasNext()){
+                val i = it.nextIndex()
+                val item = it.next()
+                if(item is DateSeparator) {
+                    if(items.lastIndex == i){
+                        it.remove()
+                        notifyItemRemoved(i)
+                    } else if(items[i + 1] is DateSeparator){
+                        it.remove()
+                        notifyItemRemoved(i)
+                    }
+                }
+            }
+        }
+    }
+
+    inner class DateSeparatorViewHolder(val v: View): RecyclerView.ViewHolder(v) {
         fun bind(dateSeparator: DateSeparator){
             v.tag = this
             v.vDateSeparator.text = string(dateSeparator.titleResId)
@@ -152,7 +205,6 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
             v.tag = this
             v.vTitle.text = recording.name
             v.vFormat.text = recording.format
-            v.vFormat.setBackgroundColor(Constant.SUPPORTED_FORMATS_WITH_COLORS[recording.format]!!)
             v.vDate.text = recording.date.prettyDate()
             v.vSize.text = recording.size.prettySize()
             v.vDuration.text = recording.duration.prettyDuration()
