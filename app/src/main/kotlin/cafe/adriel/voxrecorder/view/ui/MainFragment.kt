@@ -58,6 +58,9 @@ class MainFragment: BaseFragment(), IMainView {
         Bus.observe<LoadRecordingsEvent>()
                 .subscribe { presenter.load() }
                 .registerInBus(this)
+        Bus.observe<SaveRecordingEvent>()
+                .subscribe { presenter.save(it.recording) }
+                .registerInBus(this)
         Bus.observe<RecordingAddedEvent>()
                 .subscribe { onRecordingAdded(it.recording) }
                 .registerInBus(this)

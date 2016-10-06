@@ -33,6 +33,8 @@
     <string name="delete_recording">Delete recording</string>
     <string name="confirm_deletion_recording">Do you really want to delete \"%1$s\"?</string>
     <string name="invalid_filename">Invalid filename</string>
+    <string name="file_already_exists">There is already a file with the same name</string>
+    <string name="unable_save_file">Unable to save file</string>
     <string name="unable_rename_file">Unable to rename file</string>
     <string name="unable_delete_file">Unable to delete file</string>
     <string name="missing_permission">Missing permission</string>

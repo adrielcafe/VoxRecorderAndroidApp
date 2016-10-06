@@ -43,6 +43,11 @@ dependencies {
     compile "com.android.support:preference-v14:$support_version"
     compile "com.android.support:design:$support_version"
 
+    // Firebase
+    compile "com.google.firebase:firebase-core:$firebase_version"
+    compile "com.google.firebase:firebase-ads:$firebase_version"
+    compile "com.google.firebase:firebase-crash:$firebase_version"
+
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.pawegio.kandroid:kandroid:0.6.14@aar' // https://github.com/pawegio/KAndroid
@@ -60,7 +65,7 @@ dependencies {
 
     // Audio
     compile 'com.github.adrielcafe:AndroidAudioRecorder:0.2.0'
-//    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
+    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 
     // Rx
     compile 'io.reactivex:rxjava:1.2.0'
@@ -72,3 +77,5 @@ dependencies {
 //    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
 }
+
+apply plugin: 'com.google.gms.google-services'

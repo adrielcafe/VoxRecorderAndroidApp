@@ -5,7 +5,7 @@ import rx.Observable
 
 interface IRepository<in T> {
     fun get(): Observable<List<Recording>>
-    fun convert(item: T)
+    fun save(item: T)
     fun rename(item: T, newName: String)
     fun delete(item: T)
 }

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatDelegate
 import cafe.adriel.voxrecorder.Constant
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
+import khronos.Dates
+import khronos.toString
 
 object Util {
 
@@ -30,5 +32,7 @@ object Util {
         }
         return abi86
     }
+
+    fun getFileNameWithDate() = Dates.now.let { "${it.toString("yyyy-MM-dd")}_${it.time}" }
 
 }

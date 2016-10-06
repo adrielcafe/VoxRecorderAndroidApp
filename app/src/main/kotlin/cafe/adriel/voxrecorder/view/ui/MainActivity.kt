@@ -14,13 +14,15 @@ import cafe.adriel.voxrecorder.Constant
 import cafe.adriel.voxrecorder.R
 import cafe.adriel.voxrecorder.model.entity.LoadRecordingsEvent
 import cafe.adriel.voxrecorder.model.entity.Recording
-import cafe.adriel.voxrecorder.model.entity.RecordingAddedEvent
+import cafe.adriel.voxrecorder.model.entity.SaveRecordingEvent
 import cafe.adriel.voxrecorder.util.PrefUtil
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.setFontIcon
 import cafe.adriel.voxrecorder.util.string
 import cafe.adriel.voxrecorder.view.ui.base.BaseActivity
 import com.eightbitlab.rxbus.Bus
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.pawegio.kandroid.IntentFor
 import com.pawegio.kandroid.toast
@@ -35,12 +37,14 @@ class MainActivity: BaseActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(vToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        setupFab()
+        MobileAds.initialize(this, string(R.string.admob_app_id))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         if(!recreating) {
+            setupFab()
+            setupAd()
             RxPermissions.getInstance(this)
                     .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
@@ -99,7 +103,7 @@ class MainActivity: BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == REQUEST_NEW_RECORDING){
-                Bus.send(RecordingAddedEvent(Recording(Constant.TEMP_RECORDING_FILE)))
+                Bus.send(SaveRecordingEvent(Recording(Constant.TEMP_RECORDING_FILE)))
             }
         }
     }
@@ -111,6 +115,15 @@ class MainActivity: BaseActivity() {
                     if(Util.isRecorderColorBright()) Color.BLACK else Color.WHITE)
             setOnClickListener { newRecording() }
         }
+    }
+
+    fun setupAd(){
+        val adRequest = AdRequest.Builder()
+                // @adrielcafe Moto X
+                .addTestDevice("571D3D1BA9B823441D4838AE32E59BA1")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build()
+        vAd.loadAd(adRequest)
     }
 
     fun newRecording(){

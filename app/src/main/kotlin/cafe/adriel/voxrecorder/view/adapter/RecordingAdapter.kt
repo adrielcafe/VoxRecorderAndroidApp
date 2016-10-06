@@ -47,11 +47,10 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        when(getItemViewType(position)){
-            VIEW_TYPE_SEPARATOR ->
-                (holder as DateSeparatorViewHolder).bind(items[position] as DateSeparator)
-            VIEW_TYPE_RECORDING ->
-                (holder as RecordingViewHolder).bind(items[position] as Recording)
+        if(holder is DateSeparatorViewHolder){
+            holder.bind(items[position] as DateSeparator)
+        } else if(holder is RecordingViewHolder){
+            holder.bind(items[position] as Recording)
         }
     }
 
@@ -137,16 +136,16 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
     }
 
     private fun sort(){
-        items.sortWith(Comparator { r1: Any, r2: Any ->
-            val date1 = if(r1 is DateSeparator) r1.date else (r1 as Recording).date
-            val date2 = if(r2 is DateSeparator) r2.date else (r2 as Recording).date
+        items.sortWith(Comparator { item1: Any, item2: Any ->
+            val date1 = if(item1 is DateSeparator) item1.date else (item1 as Recording).date
+            val date2 = if(item2 is DateSeparator) item2.date else (item2 as Recording).date
             date2.compareTo(date1).apply {
-                if(r1 is DateSeparator){
+                if(item1 is DateSeparator){
                     -1
-                } else if(r2 is DateSeparator){
+                } else if(item2 is DateSeparator){
                     1
                 } else if(this == 0){
-                    (r1 as Recording).name.toLowerCase().compareTo((r2 as Recording).name.toLowerCase())
+                    (item1 as Recording).name.toLowerCase().compareTo((item2 as Recording).name.toLowerCase())
                 } else {
                     this
                 }

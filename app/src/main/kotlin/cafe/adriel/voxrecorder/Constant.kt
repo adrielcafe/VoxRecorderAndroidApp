@@ -2,6 +2,7 @@ package cafe.adriel.voxrecorder
 
 import android.net.Uri
 import android.os.Environment
+import cafe.adriel.androidaudioconverter.model.AudioFormat
 import java.io.File
 
 object Constant {
@@ -12,7 +13,7 @@ object Constant {
 
     val TEMP_RECORDING_FILE = App.instance.cacheDir.path + "/new-recording.wav"
     val RECORDING_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdirs() }
-    val SUPPORTED_FORMATS = listOf("aac", "mp3", "m4a", "wma", "wav", "flac")
+    val SUPPORTED_FORMATS = AudioFormat.values().map { it.format }
 
     val PREF_THEME = "theme"
     val PREF_THEME_DARK_MODE = "theme_dark_mode"

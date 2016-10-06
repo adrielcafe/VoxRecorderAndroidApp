@@ -2,6 +2,7 @@ package cafe.adriel.voxrecorder.presenter
 
 import android.media.MediaPlayer
 import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.util.AnalyticsUtil
 import cafe.adriel.voxrecorder.util.orFalse
 import cafe.adriel.voxrecorder.view.IRecordingView
 import com.pawegio.kandroid.e
@@ -15,6 +16,7 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     override fun play(recording: Recording) {
         if(!recording.equals(currentRecording)) {
             stop()
+            AnalyticsUtil.viewRecordingEvent(recording)
         }
         currentRecording = recording
         currentRecording?.let {
