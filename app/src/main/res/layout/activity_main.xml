@@ -30,20 +30,37 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
-        android:id="@+id/fMain"
-        android:name="cafe.adriel.voxrecorder.view.ui.MainFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        tools:layout="@layout/fragment_main"/>
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/vFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/default_margin"
-        android:src="@drawable/logo_fab"/>
+        <fragment
+            android:id="@+id/fMain"
+            android:name="cafe.adriel.voxrecorder.view.ui.MainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?actionBarSize"
+            android:layout_above="@+id/vAd"
+            tools:layout="@layout/fragment_main"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/vFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/vAd"
+            android:layout_margin="@dimen/default_margin"
+            android:src="@drawable/logo_fab"/>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/vAd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:adSize="SMART_BANNER"
+            app:adUnitId="@string/admob_banner_id"/>
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -2,6 +2,8 @@ package cafe.adriel.voxrecorder.presenter
 
 import android.media.MediaPlayer
 import cafe.adriel.voxrecorder.model.entity.Recording
+import cafe.adriel.voxrecorder.util.AnalyticsUtil
+import cafe.adriel.voxrecorder.util.orFalse
 import cafe.adriel.voxrecorder.view.IRecordingView
 import com.pawegio.kandroid.e
 
@@ -14,6 +16,7 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     override fun play(recording: Recording) {
         if(!recording.equals(currentRecording)) {
             stop()
+            AnalyticsUtil.viewRecordingEvent(recording)
         }
         currentRecording = recording
         currentRecording?.let {
@@ -41,7 +44,7 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
     override fun pause() {
         currentRecording?.let {
             try {
-                if (player?.isPlaying as Boolean) {
+                if (player?.isPlaying.orFalse()) {
                     player?.pause()
                     isPaused = true
                     view.onPause(it)
@@ -69,7 +72,7 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
         currentRecording?.let {
             try {
                 e { "${player?.currentPosition} $progress" }
-                if (player?.isPlaying as Boolean) {
+                if (player?.isPlaying.orFalse()) {
                     player?.seekTo(progress)
                     view.onSeekTo(it, progress)
                 }
@@ -79,12 +82,16 @@ class RecordingPresenter(val view: IRecordingView): IRecordingPresenter {
         }
     }
 
+    override fun onPause() {
+        pause()
+    }
+
     override fun onDestroy() {
         try {
-            player?.apply {
-                reset()
-                release()
+            currentRecording?.let {
+                view.onStop(it)
             }
+            isPaused = false
             player = null
             currentRecording = null
         } catch (e: Exception){

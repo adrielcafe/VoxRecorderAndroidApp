@@ -14,9 +14,10 @@
     <color name="clouds">#ECF0F1</color>
     <color name="wet_asphalt">#34495E</color>
 
-    <color name="recording_menu_bg">@color/clouds</color>
-
     <color name="grey_alpha">#33999999</color>
+
+    <color name="state_bg">#FAFAFA</color>
+    <color name="recording_menu_bg">@color/clouds</color>
 
     <string-array name="pref_theme_recorder_color">
         <item>@color/turquoise</item>

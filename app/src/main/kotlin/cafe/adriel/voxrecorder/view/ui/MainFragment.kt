@@ -21,6 +21,7 @@ import com.eightbitlab.rxbus.registerInBus
 import com.pawegio.kandroid.find
 import com.pawegio.kandroid.inflateLayout
 import com.pawegio.kandroid.toast
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.android.synthetic.main.list_item_recording.view.*
 
@@ -50,6 +51,11 @@ class MainFragment: BaseFragment(), IMainView {
             it.adapter = adapter
             it.layoutManager = layoutManager
         }
+        view.vState.let {
+            it.setEmptyResource(R.layout.state_empty)
+            it.setLoadingResource(R.layout.state_loading)
+            it.showLoading()
+        }
         return view
     }
 
@@ -57,6 +63,9 @@ class MainFragment: BaseFragment(), IMainView {
         super.onActivityCreated(savedInstanceState)
         Bus.observe<LoadRecordingsEvent>()
                 .subscribe { presenter.load() }
+                .registerInBus(this)
+        Bus.observe<SaveRecordingEvent>()
+                .subscribe { presenter.save(it.recording) }
                 .registerInBus(this)
         Bus.observe<RecordingAddedEvent>()
                 .subscribe { onRecordingAdded(it.recording) }
@@ -74,18 +83,30 @@ class MainFragment: BaseFragment(), IMainView {
         // TODO Sync files
     }
 
+    override fun onPause() {
+        super.onPause()
+        adapter.recordingPresenter.onPause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        presenter.unsubscribe()
         adapter.recordingPresenter.onDestroy()
+        presenter.unsubscribe()
+    }
+
+    override fun onLoadRecordings(recordings: List<Recording>) {
+        adapter.loadRecordings(recordings)
+        updateState()
     }
 
     override fun onRecordingAdded(recording: Recording) {
         adapter.addRecording(recording)
+        updateState()
     }
 
     override fun onRecordingDeleted(recording: Recording) {
         adapter.removeRecording(recording)
+        updateState()
     }
 
     override fun showRenameDialog(recording: Recording) {
@@ -120,6 +141,16 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun showError(resId: Int) {
         toast(string(resId))
+    }
+
+    override fun updateState() {
+        adapter?.items?.let {
+            if(it.isNotEmpty()){
+                vState.showContent()
+            } else {
+                vState.showEmpty()
+            }
+        }
     }
 
 }

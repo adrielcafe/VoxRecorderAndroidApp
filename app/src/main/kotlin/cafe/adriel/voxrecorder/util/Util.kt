@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatDelegate
 import cafe.adriel.voxrecorder.Constant
 import com.pawegio.kandroid.fromApi
 import com.pawegio.kandroid.toApi
+import khronos.Dates
+import khronos.toString
 
 object Util {
 
@@ -18,7 +20,7 @@ object Util {
             cafe.adriel.androidaudiorecorder.Util.isBrightColor(PrefUtil.getRecorderColor())
 
     fun isSupportedFormat(filePath: String) =
-            Constant.SUPPORTED_FORMATS_WITH_COLORS.keys.any { filePath.endsWith(it, true) }
+            Constant.SUPPORTED_FORMATS.any { filePath.endsWith(it, true) }
 
     fun isCpu86(): Boolean {
         var abi86 = false
@@ -30,5 +32,7 @@ object Util {
         }
         return abi86
     }
+
+    fun getFileNameWithDate() = Dates.now.let { "${it.toString("yyyy-MM-dd")}_${it.time}" }
 
 }

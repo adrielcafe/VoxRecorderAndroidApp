@@ -19,11 +19,16 @@ abstract class BaseActivity: AppCompatActivity(), SharedPreferences.OnSharedPref
 
     private var shouldRecreateOnFocus by state(false)
 
+    protected var recreating = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         LayoutInflaterCompat.setFactory(layoutInflater, IconicsLayoutInflater(delegate))
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
+            recreating = true
             recreateWithThemeMode()
+        } else {
+            recreating = false
         }
         unfreezeInstanceState(savedInstanceState)
         PreferenceManager.getDefaultSharedPreferences(this)

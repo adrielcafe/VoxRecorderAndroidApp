@@ -46,6 +46,8 @@ fun File.getAudioDuration(): Int {
     }
 }
 
+fun Boolean?.orFalse() = this ?: false
+
 fun Date.prettyDate() = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.getDefault()).format(this)
 fun Long.prettySize() = Formatter.formatShortFileSize(App.instance, this)
 fun Int.prettyDuration(): String {

@@ -2,7 +2,7 @@ package cafe.adriel.voxrecorder
 
 import android.net.Uri
 import android.os.Environment
-import cafe.adriel.voxrecorder.util.color
+import cafe.adriel.androidaudioconverter.model.AudioFormat
 import java.io.File
 
 object Constant {
@@ -13,10 +13,7 @@ object Constant {
 
     val TEMP_RECORDING_FILE = App.instance.cacheDir.path + "/new-recording.wav"
     val RECORDING_FOLDER = File(Environment.getExternalStorageDirectory(), "VoxRecorder").apply { mkdirs() }
-    val SUPPORTED_FORMATS_WITH_COLORS = mapOf(
-            "aac" to color(R.color.turquoise), "mp3" to color(R.color.peter_river),
-            "m4a" to color(R.color.amethyst), "wma" to color(R.color.sun_flower),
-            "wav" to color(R.color.carrot), "flac" to color(R.color.alizarin))
+    val SUPPORTED_FORMATS = AudioFormat.values().map { it.format }
 
     val PREF_THEME = "theme"
     val PREF_THEME_DARK_MODE = "theme_dark_mode"
