@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="state_bg">#303030</color>
     <color name="recording_menu_bg">@color/color_primary_dark</color>
 
 </resources>

@@ -9,4 +9,5 @@ interface IMainView {
     fun showRenameDialog(recording: Recording)
     fun showDeleteDialog(recording: Recording)
     fun showError(resId: Int)
+    fun updateState()
 }

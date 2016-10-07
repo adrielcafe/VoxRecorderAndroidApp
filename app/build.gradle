@@ -59,6 +59,7 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.tsengvn:typekit:1.0.1@aar'
     compile 'org.zakariya.flyoutmenus:flyoutmenu:0.5.3@aar'
+    compile 'com.github.nukc.stateview:library:0.3.5@aar'
     compile 'com.github.iammert:ProgressLayout:a481ddc'
     compile 'com.github.adrielcafe:ColorPicker:a06614f'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
