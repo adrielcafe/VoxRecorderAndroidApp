@@ -16,13 +16,18 @@ android {
     }
     productFlavors {
         dev {
+            resValue "string", "app_name", "Vox Rec. Dev"
             minSdkVersion 23
         }
         prod {
+            resValue "string", "app_name", "Vox Recorder"
             minSdkVersion 18
         }
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -63,20 +68,17 @@ dependencies {
     compile 'com.github.iammert:ProgressLayout:a481ddc'
     compile 'com.github.adrielcafe:ColorPicker:a06614f'
 //    compile 'cat.ereza:customactivityoncrash:1.5.0@aar'
+//    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
 
     // Audio
     compile 'com.github.adrielcafe:AndroidAudioRecorder:0.2.0'
     compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 
     // Rx
-    compile 'io.reactivex:rxjava:1.2.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.eightbitlab:rxbus:1.0.2'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.1'
-
-    // Core
-//    compile 'com.github.hotchemi:android-rate:1.0.1@aar'
-
+    compile 'io.reactivex:rxjava:1.2.1'
+    compile 'io.reactivex:rxandroid:1.2.1@aar'
+    compile 'com.eightbitlab:rxbus:1.0.2@aar'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'

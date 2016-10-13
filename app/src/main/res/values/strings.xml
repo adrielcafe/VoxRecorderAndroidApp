@@ -1,7 +1,5 @@
 <resources>
 
-    <string name="app_name" translatable="false">Vox Recorder</string>
-
     <string name="upgrade_pro">Upgrade to PRO</string>
     <string name="filter">Filter</string>
     <string name="search">Search</string>
