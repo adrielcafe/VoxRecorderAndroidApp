@@ -153,7 +153,7 @@ class RecordingAdapter(val activity: Activity, val mainPresenter: IMainPresenter
         })
     }
 
-    private fun getViewHolder(index: Int) = layoutManager?.findViewByPosition(index)?.tag as RecyclerView.ViewHolder
+    private fun getViewHolder(index: Int) = layoutManager.findViewByPosition(index)?.tag as RecyclerView.ViewHolder
 
     private fun getItemIndex(item: Any) =
             items.indexOfFirst{ it.equals(item) }

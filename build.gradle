@@ -1,15 +1,15 @@
 buildscript {
-    ext.support_version = '24.2.1'
-    ext.firebase_version = '9.6.1'
-    ext.kotlin_version = '1.0.4'
+    ext.support_version = "24.2.1"
+    ext.firebase_version = "9.6.1"
+    ext.kotlin_version = "1.0.4"
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.1'
-        classpath 'com.ofg:uptodate-gradle-plugin:1.6.2'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath "com.android.tools.build:gradle:2.2.1"
+        classpath "com.ofg:uptodate-gradle-plugin:1.6.2"
+        classpath "com.google.gms:google-services:3.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,7 +18,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
 }
 
