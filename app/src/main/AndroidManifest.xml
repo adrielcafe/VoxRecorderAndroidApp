@@ -20,6 +20,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="cat.ereza.customactivityoncrash.RESTART" />
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -33,6 +34,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cafe.adriel.voxrecorder.view.ui.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="cafe.adriel.voxrecorder.view.ui.CrashActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="cafe.adriel.voxrecorder.view.ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Crash">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cafe.adriel.voxrecorder.view.ui.MainActivity" />
+            <intent-filter>
+                <action android:name="cat.ereza.customactivityoncrash.ERROR" />
+            </intent-filter>
         </activity>
 
         <!-- AudioRecorderActivity -->

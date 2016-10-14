@@ -8,6 +8,7 @@ import cafe.adriel.androidaudioconverter.callback.ILoadCallback
 import cafe.adriel.androidaudioconverter.model.AudioFormat
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.pref
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.tsengvn.typekit.Typekit
 
 class App: Application() {
@@ -23,6 +24,7 @@ class App: Application() {
         }
         super.onCreate()
         instance = this
+        CustomActivityOnCrash.install(this)
         initPreferences()
         initCustomFonts()
         initAudioConverter()
