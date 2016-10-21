@@ -1,17 +1,18 @@
 package cafe.adriel.voxrecorder
 
-import android.app.Application
 import android.content.Context
 import android.os.StrictMode
+import android.support.multidex.MultiDexApplication
 import cafe.adriel.androidaudioconverter.AndroidAudioConverter
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback
 import cafe.adriel.androidaudioconverter.model.AudioFormat
 import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.pref
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
+import com.pawegio.kandroid.runAsync
 import com.tsengvn.typekit.Typekit
 
-class App: Application() {
+class App: MultiDexApplication() {
 
     companion object {
         lateinit var instance: Context
@@ -19,12 +20,12 @@ class App: Application() {
     }
 
     override fun onCreate() {
+        CustomActivityOnCrash.install(this)
         if(BuildConfig.DEBUG){
             StrictMode.enableDefaults()
         }
         super.onCreate()
         instance = this
-        CustomActivityOnCrash.install(this)
         initPreferences()
         initCustomFonts()
         initAudioConverter()
@@ -49,14 +50,17 @@ class App: Application() {
     }
 
     private fun initAudioConverter(){
-        AndroidAudioConverter.load(this, object : ILoadCallback {
-            override fun onSuccess() {
+        runAsync {
+            AndroidAudioConverter.load(this, object : ILoadCallback {
+                override fun onSuccess() {
 
-            }
-            override fun onFailure(error: Exception) {
-                error.printStackTrace()
-            }
-        })
+                }
+
+                override fun onFailure(error: Exception) {
+                    error.printStackTrace()
+                }
+            })
+        }
     }
 
 }

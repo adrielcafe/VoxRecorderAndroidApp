@@ -12,7 +12,8 @@ android {
         versionCode 1
         versionName "0.0.1"
         targetSdkVersion 24
-        resValue "string", "app_version", "v" + versionName
+        multiDexEnabled true
+        resValue "string", "app_version", "v" + version
     }
     productFlavors {
         dev {
@@ -43,6 +44,7 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
 
     // Support
+    compile "com.android.support:multidex:1.0.1"
     compile "com.android.support:support-v4:$support_version"
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
