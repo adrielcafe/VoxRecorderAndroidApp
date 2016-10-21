@@ -101,6 +101,7 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun onRecordingAdded(recording: Recording) {
         adapter.addRecording(recording)
+        vRecordings.smoothScrollToPosition(0)
         updateState()
     }
 
