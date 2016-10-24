@@ -15,6 +15,7 @@ import cafe.adriel.voxrecorder.util.Util
 import cafe.adriel.voxrecorder.util.pref
 import com.eightbitlab.rxbus.Bus
 import rx.Observable
+import rx.Single
 import java.io.File
 
 class RecordingRepository: IRepository<Recording> {
@@ -29,38 +30,51 @@ class RecordingRepository: IRepository<Recording> {
     }
 
     override fun save(item: Recording) {
-        val format = pref().getString(Constant.PREF_RECORDING_FORMAT, AudioFormat.WAV.format)
-        val newFile = File(Constant.RECORDING_FOLDER, item.nameWithFormat)
-        if (item.file.renameTo(newFile)) {
-            if(!item.format.equals(format)) {
-                AndroidAudioConverter.with(App.instance)
-                        .setFile(newFile)
-                        .setFormat(AudioFormat.valueOf(format))
-                        .setCallback(object: IConvertCallback {
-                            override fun onSuccess(convertedFile: File?) {
-                                if(convertedFile != null) {
-                                    val newRecording = Recording(convertedFile.path)
-                                    AnalyticsUtil.newRecordingEvent(newRecording)
-                                    Bus.send(RecordingAddedEvent(newRecording))
-                                }
-                                newFile.delete()
-                                item.file.delete()
-                            }
-                            override fun onFailure(error: Exception?) {
-                                error?.printStackTrace()
-                                Bus.send(RecordingErrorEvent(R.string.unable_save_file))
-                            }
-                        })
-                        .convert()
-            } else {
-                val newRecording = Recording(newFile.path)
-                AnalyticsUtil.newRecordingEvent(newRecording)
-                Bus.send(RecordingAddedEvent(newRecording))
-            }
-        } else {
-            Bus.send(RecordingErrorEvent(R.string.unable_save_file))
-        }
+        Single.create<Unit> {
+                val f = pref().getString(Constant.PREF_RECORDING_FORMAT, AudioFormat.WAV.format)
+                val format = AudioFormat.valueOf(f.toUpperCase())
+                val newFile = item.file.copyTo(
+                        File(Constant.RECORDING_FOLDER, item.nameWithFormat), true)
+                if (newFile != null) {
+                    val newRecording = Recording(newFile.path)
+                    if(item.format.equals(format.format)) {
+                        AnalyticsUtil.newRecordingEvent(newRecording)
+                        Bus.send(RecordingAddedEvent(newRecording))
+                    } else {
+                        convert(newRecording, format)
+                    }
+                } else {
+                    Bus.send(RecordingErrorEvent(R.string.unable_save_file))
+                }
+                item.file.delete()
+            }.subscribe({
+                // Do nothing
+            }, Throwable::printStackTrace)
+    }
 
+    override fun convert(item: Recording, format: AudioFormat) {
+        Single.create<Unit> {
+            AndroidAudioConverter.with(App.instance)
+                    .setFile(item.file)
+                    .setFormat(format)
+                    .setCallback(object: IConvertCallback {
+                        override fun onSuccess(convertedFile: File?) {
+                            if(convertedFile != null) {
+                                val newRecording = Recording(convertedFile.path)
+                                AnalyticsUtil.newRecordingEvent(newRecording)
+                                Bus.send(RecordingAddedEvent(newRecording))
+                            }
+                            item.file.delete()
+                        }
+                        override fun onFailure(error: Exception?) {
+                            error?.printStackTrace()
+                            Bus.send(RecordingErrorEvent(R.string.unable_save_file))
+                        }
+                    })
+                    .convert()
+        }.subscribe({
+            // Do nothing
+        }, Throwable::printStackTrace)
     }
 
     override fun rename(item: Recording, newName: String) {

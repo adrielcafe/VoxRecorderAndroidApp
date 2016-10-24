@@ -119,7 +119,7 @@ class MainActivity: BaseActivity() {
 
     fun setupAd(){
         val adRequest = AdRequest.Builder()
-                // @adrielcafe Moto X
+                // @adrielcafe's Moto X
                 .addTestDevice("571D3D1BA9B823441D4838AE32E59BA1")
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build()

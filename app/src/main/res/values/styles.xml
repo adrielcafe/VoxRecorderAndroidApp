@@ -1,23 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_accent</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-    <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
+    <style name="ActivityAnimationStyle" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/stack_right_in</item>
         <item name="android:activityOpenExitAnimation">@anim/stack_to_back</item>
         <item name="android:activityCloseEnterAnimation">@anim/stack_to_front</item>

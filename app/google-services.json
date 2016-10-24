@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667210407760:android:e57785e9aac23012",
+        "android_client_info": {
+          "package_name": "cafe.adriel.voxrecorder.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667210407760-vkl9dsrnjdihl67m3bqqo64p0tkvtejr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfOrkuZaylKAj_jI6y1yJB06RPq9Kp-34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -36,14 +36,14 @@ class MainFragment: BaseFragment(), IMainView {
         val view = inflater!!.inflate(R.layout.fragment_main, container, false)
         view.vRecordings.let {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = RecordingAdapter(activity, presenter, layoutManager!!)
+            adapter = RecordingAdapter(activity, presenter, layoutManager)
             it.addItemDecoration(RecyclerItemDecoration())
             it.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
-                        adapter?.items?.forEachIndexed { i, r ->
-                            layoutManager?.findViewByPosition(i)?.vMenu?.dismiss()
+                        adapter.items.forEachIndexed { i, r ->
+                            layoutManager.findViewByPosition(i)?.vMenu?.dismiss()
                         }
                     }
                 }
@@ -101,6 +101,7 @@ class MainFragment: BaseFragment(), IMainView {
 
     override fun onRecordingAdded(recording: Recording) {
         adapter.addRecording(recording)
+        vRecordings.smoothScrollToPosition(0)
         updateState()
     }
 
@@ -144,7 +145,7 @@ class MainFragment: BaseFragment(), IMainView {
     }
 
     override fun updateState() {
-        adapter?.items?.let {
+        adapter.items.let {
             if(it.isNotEmpty()){
                 vState.showContent()
             } else {

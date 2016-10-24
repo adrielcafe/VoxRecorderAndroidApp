@@ -1,0 +1,105 @@
+<resources>
+
+    <string name="upgrade_pro">Atualizar para PRO</string>
+    <string name="filter">Filtrar</string>
+    <string name="search">Pesquisar</string>
+    <string name="settings">Preferências</string>
+    <string name="recording">Gravação</string>
+    <string name="audio_file_format">Formato do arquivo</string>
+    <string name="audio_file_format_unsupported">WAV - Outros formatos não são suportados pelo seu aparelho</string>
+    <string name="sample_rate">Taxa de amostragem</string>
+    <string name="source">Fonte</string>
+    <string name="channel">Canal</string>
+    <string name="theme">Tema</string>
+    <string name="recorder_color">Cor do gravador</string>
+    <string name="dark_mode">Modo escuro</string>
+    <string name="about">Sobre</string>
+    <string name="spread_love">Espalhe o amor</string>
+    <string name="help_share_app">Compartilhe Vox com seus amigos</string>
+    <string name="you_should_give_try_vox">Baixe o app Vox Recorder, é incrível!</string>
+    <string name="help_feedback">Ajuda &amp; feedback</string>
+    <string name="send_me_email">Envie um email</string>
+    <string name="rate_app">Avaliar o app</string>
+    <string name="give_five_stars">Dê 5 estrelas para o Vox!</string>
+    <string name="version">Versão</string>
+    <string name="this_recording_was_created_using_vox">Essa gravação foi criada com o Vox Recorder (%1$s)</string>
+    <string name="cancel">Cancelar</string>
+    <string name="new_name">Nome nome</string>
+    <string name="rename">Renomear</string>
+    <string name="rename_recording">Renomear gravação</string>
+    <string name="delete">Excluir</string>
+    <string name="delete_recording">Excluir gravação</string>
+    <string name="confirm_deletion_recording">Você quer mesmo excluir \"%1$s\"?</string>
+    <string name="invalid_filename">Nome do arquivo inválido</string>
+    <string name="file_already_exists">Já existe um arquivo com o mesmo nome</string>
+    <string name="unable_save_file">Não foi possível salvar o arquivo</string>
+    <string name="unable_rename_file">Não foi possível renomear o arquivo</string>
+    <string name="unable_delete_file">Não foi possível excluir o arquivo</string>
+    <string name="missing_permission">Sem permissão</string>
+    <string name="today">Hoje</string>
+    <string name="this_week">Essa semana</string>
+    <string name="this_month">Esse mês</string>
+    <string name="this_year">Esse ano</string>
+    <string name="oldest">Antigas</string>
+    <string name="autoplay">Iniciar gravação automaticamente</string>
+    <string name="auto_begin_recording_when_recorder_opens">Automaticamente começa a gravar quando o gravador é aberto</string>
+    <string name="keep_display_on">Manter a tela ligada</string>
+    <string name="keep_display_on_while_recording">Impede que a tela desligue enquanto estiver gravando</string>
+    <string name="start_your_first_recording">Começe sua primeira gravação</string>
+    <string name="tap_on_the_button">Toque no botão {gmd-mic-none}!</string>
+
+    <string-array name="pref_recording_format_titles">
+        <item>WAV</item>
+        <item>FLAC</item>
+        <item>AAC</item>
+        <item>MP3</item>
+        <item>M4A</item>
+        <item>WMA</item>
+    </string-array>
+    <string-array name="pref_recording_format_values">
+        <item>wav</item>
+        <item>flac</item>
+        <item>aac</item>
+        <item>mp3</item>
+        <item>m4a</item>
+        <item>wma</item>
+    </string-array>
+
+    <string-array name="pref_recording_sample_rate_titles">
+        <item>48.000 Hz</item>
+        <item>44.100 Hz</item>
+        <item>32.000 Hz</item>
+        <item>22.050 Hz</item>
+        <item>16.000 Hz</item>
+        <item>11.025 Hz</item>
+        <item>8.000 Hz</item>
+    </string-array>
+    <string-array name="pref_recording_sample_rate_values">
+        <item>48000</item>
+        <item>44100</item>
+        <item>32000</item>
+        <item>22050</item>
+        <item>16000</item>
+        <item>11025</item>
+        <item>8000</item>
+    </string-array>
+
+    <string-array name="pref_recording_channel_titles">
+        <item>Estéreo</item>
+        <item>Mono</item>
+    </string-array>
+    <string-array name="pref_recording_channel_values">
+        <item>stereo</item>
+        <item>mono</item>
+    </string-array>
+
+    <string-array name="pref_recording_source_titles">
+        <item>Microfone frontal</item>
+        <item>Microfone da câmera</item>
+    </string-array>
+    <string-array name="pref_recording_source_values">
+        <item>mic</item>
+        <item>camcorder</item>
+    </string-array>
+
+</resources>
